@@ -153,9 +153,11 @@ dialog {
 			width: 4px;
 			height: 20px;
 			margin-inline-start: -16px;
-			animation-timing-function: var(--curveLinear);
-			animation-fill-mode: both;
-			animation-duration: var(--durationFaster);
+			body:not([theme-state-transition="false"]) & {
+				animation-timing-function: var(--curveLinear);
+				animation-fill-mode: both;
+				animation-duration: var(--durationFaster);
+			}
 			content: "";
 			position: absolute;
 			border-radius: var(--borderRadiusCircular);
@@ -247,16 +249,18 @@ dialog#theme h2 {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-	dialog {
-		--starting-scale: var(--dialog-starting-scale, 0.85);
-		animation-name: scaleIn, fadeIn;
-		animation-duration: var(--durationGentle);
-		animation-timing-function: var(--curveDecelerateMid);
-	}
-	#blackout {
-		animation-name: fadeIn;
-		animation-duration: var(--durationGentle);
-		animation-timing-function: var(--curveDecelerateMid);
+	body:not([theme-dialog-animation="false"]) {
+		dialog {
+			--starting-scale: var(--dialog-starting-scale, 0.85);
+			animation-name: scaleIn, fadeIn;
+			animation-duration: var(--durationGentle);
+			animation-timing-function: var(--curveDecelerateMid);
+		}
+		#blackout {
+			animation-name: fadeIn;
+			animation-duration: var(--durationGentle);
+			animation-timing-function: var(--curveDecelerateMid);
+		}
 	}
 }
 

@@ -105,17 +105,16 @@
   }
 }
 
-:where(body:not([theme-state-transition="false"])) {
-  %stateTransition {
-    transition-duration: var(--durationFaster);
-    transition-property:
-      background,
-      border-color,
-      color,
-      box-shadow,
-      opacity;
-    transition-timing-function: var(--curveEasyEase);
-  }
+body:not([theme-state-transition="false"]) {
+  --state-transition-duration: var(--durationFaster);
+  --state-transition-property: background, border-color, color, box-shadow, opacity;
+  --state-transition-timing-function: var(--curveEasyEase);
+}
+
+%stateTransition {
+  transition-duration: var(--state-transition-duration);
+  transition-property: var(--state-transition-property);
+  transition-timing-function: var(--state-transition-timing-function);
 }
 
 @mixin stateful($states, $selectedSelectors: [], $transition: true) {

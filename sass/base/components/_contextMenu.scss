@@ -12,7 +12,9 @@
   transform-origin: top left;
 
   @media (prefers-reduced-motion: no-preference) {
-    animation: slideInMenu var(--durationGentle) var(--curveDecelerateMid);
+    body:not([theme-menu-animation="false"]) & {
+      animation: slideInMenu var(--durationGentle) var(--curveDecelerateMid);
+    }
   }
 
   contain: style layout;

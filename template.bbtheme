@@ -14,4 +14,14 @@ options:
     options:
       true: On
       false: Off
+  menu-animation:
+    name: Menu animations
+    options:
+      true: On
+      false: Off
+  dialog-animation:
+    name: Dialog animations
+    options:
+      true: On
+      false: Off
 */
