@@ -184,18 +184,9 @@ dialog {
 			}
 			&::after {
 				background-color: var(--colorCompoundBrandForeground1);
-				animation-name: f1ayorr4;
+				animation-name: fadeToCompoundBrandForeground1;
 			}
 		}
-	}
-}
-
-@keyframes f1ayorr4 {
-	0% {
-		background: transparent;
-	}
-	100% {
-		background: var(--colorCompoundBrandForeground1);
 	}
 }
 

@@ -21,3 +21,12 @@
         transform: scale(var(--starting-scale))
     }
 }
+
+@keyframes fadeToCompoundBrandForeground1 {
+	0% {
+		background: transparent;
+	}
+	100% {
+		background: var(--colorCompoundBrandForeground1);
+	}
+}
