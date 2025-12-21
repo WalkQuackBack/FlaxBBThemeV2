@@ -1,37 +1,72 @@
 @use '../../mixins';
 
-.texture {
-    display: flex;
-    height: 48px;
-    padding: 0 var(--spacingHorizontalS) 0 0;
-	@include mixins.stateful(
-	(
-		"bg": var(--colorNeutralBackground3),
-		"stroke": transparent,
-		"fg": var(--colorNeutralForeground1),
-		
-		"bg-hover": var(--colorNeutralBackground3Hover),
-		"stroke-hover": transparent,
-		"fg-hover": var(--colorNeutralForeground1Hover),
-		
-		"bg-pressed": var(--colorNeutralBackground3Pressed),
-		"stroke-pressed": transparent,
-		"fg-pressed": var(--colorNeutralForeground1Pressed),
-		
-		"bg-selected": var(--colorBrandBackground),
-		"fg-selected": var(--colorNeutralForegroundOnBrand),
+@include mixins.texture-like-list-item('.texture', '.texture_description_wrapper', '.texture_name', '.texture_res');
+// .texture {
+	// display: flex;
+	// height: 48px;
+	// padding: 0 var(--spacingHorizontalS) 0 0;
 
-		"bg-selected-hover": var(--colorBrandBackgroundHover),
-		"fg-selected-hover": var(--colorNeutralForegroundOnBrand),
+	// align-items: center;
+	// gap: var(--spacingHorizontalS);
 
-		"bg-selected-pressed": var(--colorBrandBackgroundPressed),
-		"fg-selected-pressed": var(--colorNeutralForegroundOnBrand),
-	),
-		('.selected')
-	);
-	&:hover {
-		.texture_name {
-			color: inherit;
-		}
-	}
-}
+	// @include mixins.stateful(
+	// (
+	// 	"bg": var(--colorNeutralBackground3),
+	// 	"fg": var(--colorNeutralForeground1),
+		
+	// 	"bg-hover": var(--colorNeutralBackground3Hover),
+	// 	"fg-hover": var(--colorNeutralForeground1Hover),
+		
+	// 	"bg-pressed": var(--colorNeutralBackground3Pressed),
+	// 	"fg-pressed": var(--colorNeutralForeground1Pressed),
+		
+	// 	"bg-selected": var(--colorNeutralBackground3Selected),
+	// 	"fg-selected": var(--colorNeutralForegroundOnBrand),
+
+	// 	"bg-selected-hover": var(--colorNeutralBackground3Hover),
+	// 	"fg-selected-hover": var(--colorNeutralForeground1Hover),
+
+	// 	"bg-selected-pressed": var(--colorNeutralBackground3Active),
+	// 	"fg-selected-pressed": var(--colorNeutralForeground1Pressed),
+	// ),
+	// 	('.selected')
+	// );
+	// &:hover {
+	// 	.texture_name {
+	// 		color: inherit;
+	// 	}
+	// }
+
+	// .texture_description_wrapper {
+	// 	display: flex;
+	// 	flex-direction: column;
+	// 	justify-content: center;
+	// 	gap: var(--spacingVerticalXXS);
+	// 	.texture_name {
+	// 		margin: 0;
+	
+	// 		font-size: var(--fontSizeBase300);
+	// 		line-height: var(--lineHeightBase300);
+	// 		font-weight: var(--fontWeightRegular);
+	// 	}
+	// 	.texture_res {
+	// 		margin: 0;
+	// 		height: auto;
+	// 		color: var(--colorNeutralForeground3);
+	// 		font-size: var(--fontSizeBase200);
+	// 		line-height: var(--lineHeightBase200);
+	// 		font-weight: var(--fontWeightRegular);
+	// 	}
+	// }
+	// i {
+	// 	@include mixins.flex-center;
+	// 	margin: 0;
+	// 	max-width: none;
+	// 	width: 32px;
+	// 	height: 32px;
+	// 	&.clickable {
+	// 		@include mixins.btn-base;
+	// 		@include mixins.btn-subtle;
+	// 	}
+	// }
+// }

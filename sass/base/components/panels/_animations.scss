@@ -1,39 +1,41 @@
 @use '../../mixins';
 
-.animation {
-    display: flex;
-		align-items: center;
-    // height: 40px;
-    padding: 0 var(--spacingHorizontalS);
-		gap: var(--spacingHorizontalSNudge);
-	@include mixins.stateful(
-	(
-		"bg": var(--colorNeutralBackground3),
-		"stroke": transparent,
-		"fg": var(--colorNeutralForeground1),
-		
-		"bg-hover": var(--colorNeutralBackground3Hover),
-		"stroke-hover": transparent,
-		"fg-hover": var(--colorNeutralForeground1Hover),
-		
-		"bg-pressed": var(--colorNeutralBackground3Pressed),
-		"stroke-pressed": transparent,
-		"fg-pressed": var(--colorNeutralForeground1Pressed),
-		
-		"bg-selected": var(--colorBrandBackground),
-		"fg-selected": var(--colorNeutralForegroundOnBrand),
+@include mixins.texture-like-list-item('.animation', '> label', '> label', '.pingguo');
 
-		"bg-selected-hover": var(--colorBrandBackgroundHover),
-		"fg-selected-hover": var(--colorNeutralForegroundOnBrand),
+// .animation {
+//     display: flex;
+// 		align-items: center;
+//     // height: 40px;
+//     padding: 0 var(--spacingHorizontalS);
+// 		gap: var(--spacingHorizontalSNudge);
+// 	@include mixins.stateful(
+// 	(
+// 		"bg": var(--colorNeutralBackground3),
+// 		"stroke": transparent,
+// 		"fg": var(--colorNeutralForeground1),
+		
+// 		"bg-hover": var(--colorNeutralBackground3Hover),
+// 		"stroke-hover": transparent,
+// 		"fg-hover": var(--colorNeutralForeground1Hover),
+		
+// 		"bg-pressed": var(--colorNeutralBackground3Pressed),
+// 		"stroke-pressed": transparent,
+// 		"fg-pressed": var(--colorNeutralForeground1Pressed),
+		
+// 		"bg-selected": var(--colorBrandBackground),
+// 		"fg-selected": var(--colorNeutralForegroundOnBrand),
 
-		"bg-selected-pressed": var(--colorBrandBackgroundPressed),
-		"fg-selected-pressed": var(--colorNeutralForegroundOnBrand),
-	),
-		('.selected')
-	);
-	&:hover {
-		.texture_name {
-			color: inherit;
-		}
-	}
-}
+// 		"bg-selected-hover": var(--colorBrandBackgroundHover),
+// 		"fg-selected-hover": var(--colorNeutralForegroundOnBrand),
+
+// 		"bg-selected-pressed": var(--colorBrandBackgroundPressed),
+// 		"fg-selected-pressed": var(--colorNeutralForegroundOnBrand),
+// 	),
+// 		('.selected')
+// 	);
+// 	&:hover {
+// 		.texture_name {
+// 			color: inherit;
+// 		}
+// 	}
+// }

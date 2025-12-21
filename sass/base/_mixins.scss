@@ -395,3 +395,76 @@ body:not([theme-state-transition="false"]) {
   background-color: var(--colorBrandBackground2);
   color: var(--colorBrandForeground2);
 }
+
+// TODO: make neater
+@mixin texture-like-list-item($baseSelector, $textWrapperSelector, $textNameSelector, $textDescriptionSelector) {
+  #{$baseSelector} {
+    display: flex;
+    height: 48px;
+    padding: 0 var(--spacingHorizontalS) 0 0;
+
+    align-items: center;
+    gap: var(--spacingHorizontalS);
+
+    @include stateful(
+    (
+      "bg": var(--colorNeutralBackground3),
+      "fg": var(--colorNeutralForeground1),
+      
+      "bg-hover": var(--colorNeutralBackground3Hover),
+      "fg-hover": var(--colorNeutralForeground1Hover),
+      
+      "bg-pressed": var(--colorNeutralBackground3Pressed),
+      "fg-pressed": var(--colorNeutralForeground1Pressed),
+      
+      "bg-selected": var(--colorNeutralBackground3Selected),
+      "fg-selected": var(--colorNeutralForegroundOnBrand),
+
+      "bg-selected-hover": var(--colorNeutralBackground3Hover),
+      "fg-selected-hover": var(--colorNeutralForeground1Hover),
+
+      "bg-selected-pressed": var(--colorNeutralBackground3Active),
+      "fg-selected-pressed": var(--colorNeutralForeground1Pressed),
+    ),
+      ('.selected')
+    );
+    &:hover {
+      .texture_name {
+        color: inherit;
+      }
+    }
+
+    #{$textWrapperSelector} {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--spacingVerticalXXS);
+    }
+    #{$textNameSelector} {
+      margin: 0;
+  
+      font-size: var(--fontSizeBase300);
+      line-height: var(--lineHeightBase300);
+      font-weight: var(--fontWeightRegular);
+    }
+    #{$textDescriptionSelector} {
+      margin: 0;
+      height: auto;
+      color: var(--colorNeutralForeground3);
+      font-size: var(--fontSizeBase200);
+      line-height: var(--lineHeightBase200);
+      font-weight: var(--fontWeightRegular);
+    }
+    i, .in_list_button {
+      @include flex-center;
+      margin: 0;
+      max-width: none;
+      width: 32px;
+      height: 32px;
+      &.clickable {
+        @include btn-base;
+        @include btn-subtle;
+      }
+    }
+  }
+}

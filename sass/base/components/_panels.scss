@@ -1,7 +1,9 @@
 @use '../mixins';
 
 @use './panels/animations';
+@use './panels/layers';
 @use './panels/textures';
+@use './panels/timeline';
 
 .panel {
 	border: var(--strokeWidthThin) solid var(--colorTransparentStroke);

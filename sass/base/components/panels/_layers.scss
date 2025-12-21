@@ -1,0 +1,3 @@
+@use '../../mixins';
+
+@include mixins.texture-like-list-item('.texture_layer', '.texture_description_wrapper', '.texture_name', '.texture_res');
