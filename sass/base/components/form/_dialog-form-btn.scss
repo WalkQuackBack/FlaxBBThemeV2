@@ -1,0 +1,8 @@
+@use '../../mixins';
+
+dialog div.dialog_form_buttons a {
+	@include mixins.btn-base;
+	@include mixins.btn-shape('small');
+	@include mixins.btn-secondary;
+  margin-inline-end: var(--spacingHorizontalSNudge);
+}

@@ -1,0 +1,201 @@
+import { existsSync, mkdirSync, readFileSync, writeFile } from "node:fs";
+import * as path from "@std/path";
+
+import { Buffer } from "node:buffer";
+import process from "node:process";
+
+import browserslist from 'browserslist';
+import { transform, browserslistToTargets } from "lightningcss";
+import * as sass from "sass";
+
+const targets = browserslistToTargets(browserslist(['last 2 versions', 'not dead']));
+
+const IN = "./sass/variants";
+const OUT = "./dist";
+const PLACES_TO_WATCH = ["sass", "template.bbtheme", "prefix.css"];
+
+const THEME_PREFIX = "bbflaxv2-";
+const PROJECT_NAME_PRETTY = "Flax ";
+const VERSION = "0.1.0";
+
+const AUTHOR = process.env.USER ||
+  process.env.USERNAME ||
+  "";
+
+let TEMPLATE = readFileSync("./template.bbtheme", "utf8");
+
+const folders = {
+  baseline: [
+    "dark",
+    "light",
+  ],
+  windows: [
+    "dark"
+  ],
+  highContrast: [
+    "highContrast"
+  ],
+  m365: [
+    "dark",
+    "light",
+  ],
+};
+
+if (!existsSync(OUT)) {
+  mkdirSync(OUT, {
+    recursive: true,
+  });
+}
+
+const compileToTheme = async (
+  inputPath: string,
+  variant: string,
+) => {
+  // Cannot be minfifed
+  const PREFIX = transform({
+    filename: "",
+    minify: false,
+    code: Buffer.from(
+      readFileSync("./prefix.css"),
+    ),
+    targets
+  }).code.toString();
+
+  const compiled = await sass.compileAsync(
+    inputPath,
+    {
+      loadPaths: ["node_modules"],
+      quietDeps: true,
+    },
+  );
+  const result = transform({
+    filename: "",
+    minify: true,
+    code: Buffer.from(compiled.css),
+    targets
+  });
+
+  // Clone object to avoid mutating the global TEMPLATE const
+  let themeData = TEMPLATE;
+
+  themeData = themeData.replace(
+    "<THEMENAME>",
+    PROJECT_NAME_PRETTY +
+      variant,
+  );
+  themeData = themeData.replace("<THEMEAUTHOR>", AUTHOR);
+
+  themeData = themeData.concat(
+    PREFIX,
+    `
+/*
+	${PROJECT_NAME_PRETTY}
+	Variant ${variant}
+	Version ${VERSION}
+	Compiled on: ${new Date().toUTCString()}
+*/
+   `,
+    result.code.toString(),
+  );
+
+  writeFile(
+    path.join(
+      OUT,
+      `${THEME_PREFIX + variant}.bbtheme`,
+    ),
+    themeData,
+    (err) => {
+      if (err) throw err;
+      console.log(`Built ${variant}`);
+    },
+  );
+};
+
+const createFoldersAndCompile = async (
+  // deno-lint-ignore no-explicit-any
+  structure: any,
+  basePath: string,
+) => {
+  for (
+    const [
+      folderName,
+      contents,
+    ] of Object.entries(structure)
+  ) {
+    const newBasePath = path.join(
+      basePath,
+      folderName,
+    );
+
+    if (Array.isArray(contents)) {
+      // Using Promise.all to compile variants in parallel
+      await Promise.all(contents.map(async (file) => {
+        const inputFile = path.join(
+          newBasePath,
+          `${file}.scss`,
+        );
+        // Fixed path slicing logic to match original intent
+        const variant = newBasePath
+          .replaceAll("\\", "-")
+          .replace("sass-variants-", "") +
+          "-" +
+          file;
+        await compileToTheme(
+          inputFile,
+          variant,
+        );
+      }));
+    } else {
+      await createFoldersAndCompile(
+        contents,
+        newBasePath,
+      );
+    }
+  }
+};
+
+let isBuilding = false;
+let debounceTimer: number | undefined;
+
+const buildAll = async () => {
+  if (isBuilding) return;
+  isBuilding = true;
+
+  console.log("\nStarting build...");
+  const start = Date.now();
+
+  try {
+    await createFoldersAndCompile(folders, IN);
+    console.log(`Build complete in ${Date.now() - start}ms`);
+  } catch (error) {
+    console.error("Build failed");
+    console.error(error);
+  } finally {
+    isBuilding = false;
+  }
+};
+
+buildAll();
+
+console.log(`Watching for changes in ${PLACES_TO_WATCH}...`);
+const watcher = Deno.watchFs(PLACES_TO_WATCH);
+for await (const event of watcher) {
+  event.paths.forEach((filePath) => {
+    if (!filePath) return;
+    const basename = path.basename(filePath);
+    if (basename === 'template.bbtheme') {
+      TEMPLATE = readFileSync("./template.bbtheme", "utf8");
+    }
+    if (
+      basename.endsWith(".scss") || basename.endsWith(".sass") ||
+      PLACES_TO_WATCH.includes(basename)
+    ) {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        console.log(`\nChange detected in: ${path.basename(filePath)}`);
+        buildAll();
+      }, 300);
+    }
+  });
+  //   console.log(">>>> event", event);
+}

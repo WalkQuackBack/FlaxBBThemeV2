@@ -1,0 +1,37 @@
+@use '../../mixins';
+
+.texture {
+    display: flex;
+    height: 48px;
+    padding: 0 var(--spacingHorizontalS) 0 0;
+	@include mixins.stateful(
+	(
+		"bg": var(--colorNeutralBackground3),
+		"stroke": transparent,
+		"fg": var(--colorNeutralForeground1),
+		
+		"bg-hover": var(--colorNeutralBackground3Hover),
+		"stroke-hover": transparent,
+		"fg-hover": var(--colorNeutralForeground1Hover),
+		
+		"bg-pressed": var(--colorNeutralBackground3Pressed),
+		"stroke-pressed": transparent,
+		"fg-pressed": var(--colorNeutralForeground1Pressed),
+		
+		"bg-selected": var(--colorBrandBackground),
+		"fg-selected": var(--colorNeutralForegroundOnBrand),
+
+		"bg-selected-hover": var(--colorBrandBackgroundHover),
+		"fg-selected-hover": var(--colorNeutralForegroundOnBrand),
+
+		"bg-selected-pressed": var(--colorBrandBackgroundPressed),
+		"fg-selected-pressed": var(--colorNeutralForegroundOnBrand),
+	),
+		('.selected')
+	);
+	&:hover {
+		.texture_name {
+			color: inherit;
+		}
+	}
+}

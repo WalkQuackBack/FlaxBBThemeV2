@@ -1,0 +1,6 @@
+@use '../../mixins';
+
+#bar_item_list li {
+	@include mixins.btn-base;
+	@include mixins.btn-subtle;
+}

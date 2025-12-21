@@ -1,0 +1,398 @@
+@use "sass:list";
+@use "sass:map";
+@use "sass:selector";
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin curve-edges($curveSize: 8) {
+  &::before, &::after {
+    position: absolute;
+    content: "";
+    bottom: 0px;
+    background: inherit;
+
+    width: #{$curveSize};
+    height: #{$curveSize};
+  }
+  &::before {
+    clip-path: path("M #{$curveSize} 0 Q #{$curveSize} #{$curveSize}, 0 #{$curveSize} H #{$curveSize} Z");
+    left: -#{$curveSize};
+  }
+  &::after {
+    clip-path: path("M 0 0 Q 0 #{$curveSize}, #{$curveSize} #{$curveSize} H 0 Z");
+    right: -#{$curveSize};
+  }
+}
+
+@mixin btn-base {
+  border: var(--strokeWidthThin) solid transparent;
+  border-radius: var(--borderRadiusMedium);
+  box-shadow: none;
+
+  cursor: pointer;
+  text-decoration-line: none;
+}
+
+@mixin btn-shape($size: medium) {
+  line-height: 0;
+  min-width: 96px;
+
+  padding: var(--spacingVerticalSNudge) var(--spacingHorizontalM);
+
+  font-size: var(--fontSizeBase300);
+  line-height: var(--lineHeightBase300);
+  font-weight: var(--fontWeightSemibold);
+
+  align-items: center;
+  justify-content: center;
+
+  vertical-align: middle;
+
+  height: auto;
+
+  @if ($size == 'small') {
+    font-size: var(--fontSizeBase200);
+    min-width: 64px;
+    line-height: var(--lineHeightBase200);
+    font-weight: var(--fontWeightRegular);
+    border-radius: var(--borderRadiusMedium);
+    padding: 3px var(--spacingHorizontalS);
+  }
+
+  @if ($size == 'large') {
+    font-weight: var(--fontWeightSemibold);
+    font-size: var(--fontSizeBase400);
+    line-height: var(--lineHeightBase400);
+    min-width: 96px;
+    padding: 8px var(--spacingHorizontalL);
+    border-radius: var(--borderRadiusMedium);
+  }
+
+  &:not([hidden], .hidden) {
+    display: inline-flex;
+  }
+
+  & > i {
+    margin-inline-end: var(--spacingHorizontalSNudge);
+  }
+}
+
+@mixin _apply-state-props($states, $prefix: "", $suffix: "") {
+  $bg: map.get($states, "bg#{$prefix}#{$suffix}");
+  $stroke: map.get($states, "stroke#{$prefix}#{$suffix}");
+  $fg: map.get($states, "fg#{$prefix}#{$suffix}");
+  $shadow: map.get($states, "shadow#{$prefix}#{$suffix}");
+  $opacity: map.get($states, "opacity#{$prefix}#{$suffix}");
+
+  @if ($bg) {
+    background: $bg;
+  }
+  @if ($stroke) {
+    border-color: $stroke;
+  }
+  @if ($fg) {
+    color: $fg;
+  }
+  @if ($shadow) {
+    box-shadow: $shadow;
+  }
+  @if ($opacity) {
+    opacity: $opacity;
+  }
+}
+
+:where(body:not([theme-state-transition="false"])) {
+  %stateTransition {
+    transition-duration: var(--durationFaster);
+    transition-property:
+      background,
+      border-color,
+      color,
+      box-shadow,
+      opacity;
+    transition-timing-function: var(--curveEasyEase);
+  }
+}
+
+@mixin stateful($states, $selectedSelectors: [], $transition: true) {
+  @include _apply-state-props($states);
+
+  @if ($transition) {
+    @extend %stateTransition;
+  }
+
+  &:focus-visible {
+    @include _apply-state-props($states, "", "-focus");
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      @include _apply-state-props($states, "", "-hover");
+    }
+  }
+
+  &:hover:active {
+    @include _apply-state-props($states, "", "-pressed");
+  }
+
+  @each $selector in $selectedSelectors {
+    &#{$selector} {
+      @include _apply-state-props($states, "-selected");
+
+      &:focus-visible {
+        @include _apply-state-props($states, "-selected", "-focus");
+      }
+
+      @media (hover: hover) {
+        &:hover {
+          @include _apply-state-props($states, "-selected", "-hover");
+        }
+      }
+
+      &:hover:active {
+        @include _apply-state-props($states, "-selected", "-pressed");
+      }
+    }
+  }
+
+  &:disabled,
+  &.disabled,
+  &[aria-disabled="true"] {
+    @include _apply-state-props($states, "-disabled");
+
+    &:focus-visible {
+      @include _apply-state-props($states, "-disabled", "-focus");
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        @include _apply-state-props($states, "-disabled", "-hover");
+      }
+    }
+
+    &:hover:active {
+      @include _apply-state-props($states, "-disabled", "-pressed");
+    }
+  }
+}
+
+@mixin btn-primary($selectedSelectors: ()) {
+  @include stateful(
+    (
+      "bg": var(--colorBrandBackground),
+      "stroke": transparent,
+      "fg": var(--colorNeutralForegroundOnBrand),
+
+      "bg-hover": var(--colorBrandBackgroundHover),
+      "fg-hover": var(--colorNeutralForegroundOnBrand),
+
+      "bg-pressed": var(--colorBrandBackgroundPressed),
+      "fg-pressed": var(--colorNeutralForegroundOnBrand),
+
+      "bg-selected": var(--colorBrandBackgroundSelected),
+      "stroke-selected": var(--colorNeutralStroke1Selected),
+      "fg-selected": var(--colorNeutralForegroundOnBrand),
+    ),
+    $selectedSelectors,
+  );
+}
+
+@mixin btn-secondary($selectedSelectors: ()) {
+  @include stateful(
+    (
+      "bg": var(--colorNeutralBackground1),
+      "stroke": var(--colorNeutralStroke1),
+      "fg": var(--colorNeutralForeground1),
+
+      "bg-hover": var(--colorNeutralBackground1Hover),
+      "stroke-hover": var(--colorNeutralStroke1Hover),
+      "fg-hover": var(--colorNeutralForeground1Hover),
+
+      "bg-pressed": var(--colorNeutralBackground1Pressed),
+      "stroke-pressed": var(--colorNeutralStroke1Pressed),
+      "fg-pressed": var(--colorNeutralForeground1Pressed),
+
+      "bg-selected": var(--colorNeutralBackground1Selected),
+      "stroke-selected": var(--colorNeutralStroke1Selected),
+      "fg-selected": var(--colorNeutralForeground1Selected),
+    ),
+    $selectedSelectors,
+  );
+}
+
+@mixin btn-subtle($selectedSelectors: ()) {
+  // background: var(--colorSubtleBackground);
+  // border-color: transparent;
+  // color: var(--colorNeutralForeground2);
+
+  // &:hover {
+  //   background: var(--colorSubtleBackgroundHover);
+  //   color: var(--colorNeutralForeground2Hover);
+  //   &:active {
+  //     background: var(--colorSubtleBackgroundPressed);
+  //     color: var(--colorNeutralForeground2Pressed);
+  //   }
+  // }
+  // &:disabled {
+  //   background: var(--colorNeutralBackgroundDisabled);
+  //   border-color: var(--colorNeutralStrokeDisabled);
+  //   color: var(--colorNeutralForegroundDisabled);
+  // }
+
+  // @for $i from 1 through list.length($selectedSelectors) {
+  //   $selector: list.nth($selectedSelectors, $i);
+  //   #{$selector} {
+  //     background: var(--colorSubtleBackgroundSelected);
+  //     color: var(--colorNeutralForeground2Selected);
+  //   }
+  // }
+
+  @include stateful(
+    (
+      "bg": var(--colorSubtleBackground),
+      "fg": var(--colorNeutralForeground2),
+
+      "bg-hover": var(--colorSubtleBackgroundHover),
+      "fg-hover": var(--colorNeutralForeground2Hover),
+
+      "bg-pressed": var(--colorSubtleBackgroundPressed),
+      "fg-pressed": var(--colorNeutralForeground2Pressed),
+      
+      "bg-selected": var(--colorSubtleBackgroundSelected),
+      "stroke-selected": var(--colorNeutralStroke1Selected),
+      "fg-selected": var(--colorNeutralForeground1Selected),
+    ),
+    $selectedSelectors,
+  );
+}
+
+@mixin form-standard() {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  position: relative;
+  box-sizing: border-box;
+  vertical-align: middle;
+  min-height: 32px;
+  font-size: var(--fontSizeBase300);
+  font-weight: var(--fontWeightRegular);
+  line-height: var(--lineHeightBase300);
+  background-color: var(--colorNeutralBackground1);
+  border: var(--strokeWidthThin) solid var(--colorNeutralStroke1);
+  border-bottom-color: var(--colorNeutralStrokeAccessible);
+  gap: var(--spacingHorizontalXXS);
+  border-radius: var(--borderRadiusMedium);
+
+  padding: 5px var(--spacingHorizontalMNudge) 5px
+    var(--spacingHorizontalMNudge);
+
+  @include stateful(
+    (
+      "fg": var(--colorNeutralForeground1), 
+      "fg-hover": var(--colorNeutralForeground1Hover),
+    ),
+  );
+
+  @media (hover: hover) {
+    &:hover {
+      border-left-color: var(--colorNeutralStroke1Hover);
+      border-right-color: var(--colorNeutralStroke1Hover);
+      border-top-color: var(--colorNeutralStroke1Hover);
+      border-bottom-color: var(--colorNeutralStrokeAccessibleHover);
+    }
+  }
+  &:active, &:focus {
+    border-left-color: var(--colorNeutralStroke1Pressed);
+    border-right-color: var(--colorNeutralStroke1Pressed);
+    border-top-color: var(--colorNeutralStroke1Pressed);
+    border-bottom-color: var(--colorNeutralStrokeAccessiblePressed);
+  }
+
+  &:focus {
+    border-bottom-color: var(--colorCompoundBrandStroke);
+    box-shadow: inset 0 -1px var(--colorCompoundBrandStroke);
+  }
+}
+
+@mixin card-base() {
+  max-width: 100%;
+  width: 720px;
+  flex-direction: column;
+  margin: auto;
+  overflow: hidden;
+  border-radius: var(--fui-Card--border-radius);
+  padding: var(--fui-Card--size);
+  gap: var(--fui-Card--size);
+  display: flex;
+  position: relative;
+  box-sizing: border-box;
+}
+
+
+@mixin card($selectedSelectors: ()) {
+  @include card-base();
+  --fui-Card--border-radius: var(--borderRadiusMedium);
+  --fui-Card--size: 12px;
+  @include stateful(
+    (
+      "bg": var(--colorNeutralBackground1),
+      "fg": var(--colorNeutralForeground1),
+      "shadow": var(--shadow4),
+	  
+      "bg-hover": var(--colorNeutralBackground1Hover),
+      "fg-hover": var(--colorNeutralForeground1Hover),
+      "shadow-hover": var(--shadow8),
+
+      "bg-pressed": var(--colorNeutralBackground1Pressed),
+      "fg-pressed": var(--colorNeutralForeground1Pressed),
+
+      "bg-selected": var(--colorNeutralBackground1Selected),
+      "fg-selected": var(--colorNeutralForeground1Selected),
+      "stroke-selected": var(--colorNeutralStroke1Selected),
+
+      "bg-selected-hover": var(--colorNeutralBackground1Hover),
+      "fg-selected-hover": var(--colorNeutralForeground1Hover),
+
+      "bg-selected-pressed": var(--colorNeutralBackground1Pressed),
+      "fg-selected-pressed": var(--colorNeutralForeground1Pressed),
+    ), $selectedSelectors
+  );
+}
+
+@mixin tag-base() {
+  font-family: inherit;
+  padding: 0 var(--spacingHorizontalS);
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border: var(--strokeWidthThin) solid var(--colorTransparentStroke);
+  border-radius: var(--borderRadiusMedium);
+
+  line-height: var(--lineHeightBase300);
+  font-weight: var(--fontWeightRegular);
+  font-size: var(--fontSizeBase300);
+}
+
+@mixin tag-filled() {
+  @include tag-base;
+  background-color: var(--colorNeutralBackground3);
+  color: var(--colorNeutralForeground2);
+}
+
+@mixin tag-outlined() {
+  @include tag-base;
+  background-color: var(--colorSubtleBackground);
+  color: var(--colorNeutralForeground2);
+  border-color: var(--colorNeutralStroke1);
+}
+
+@mixin tag-brand() {
+  @include tag-base;
+  background-color: var(--colorBrandBackground2);
+  color: var(--colorBrandForeground2);
+}

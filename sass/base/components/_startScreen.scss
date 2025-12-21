@@ -1,0 +1,156 @@
+@use '@sass-fairy/url';
+@use '../mixins';
+
+#start_screen {
+  > content {
+      border: var(--strokeWidthThin) solid var(--colorTransparentStroke);
+    display: block;
+    max-width: 1000px;
+    height: auto;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    background: var(--colorNeutralBackground1);
+    box-shadow: var(--shadow16);
+    overflow-x: hidden;
+    image-rendering: auto;
+    border-radius: 6px;
+  }
+  .recent_project {
+    &:not(.thumbnail) {
+      @include mixins.btn-base;
+      @include mixins.stateful(
+        (
+          "bg": var(--colorNeutralBackground1),
+          "fg": var(--colorNeutralForeground1),
+
+          "bg-hover": var(--colorNeutralBackground1Hover),
+          "fg-hover": var(--colorNeutralForeground1Hover),
+
+          "bg-pressed": var(--colorNeutralBackground1Pressed),
+          "fg-pressed": var(--colorNeutralForeground1Pressed),
+
+          "bg-selected": var(--colorNeutralBackground1Selected),
+          "fg-selected": var(--colorNeutralForeground1Selected),
+        )
+      );
+    }
+    &.thumbnail {
+      // display: block;
+      // margin: 0;
+      // height: 130px;
+      // position: relative;
+      // background-color: var(--color-elevated);
+      // box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+      // border-radius: 5px;
+      // cursor: pointer;
+      @include mixins.card();
+      --fui-Card--size: var(--spacingHorizontalM);
+    }
+  }
+}
+
+.start_screen_format_page {
+  button#create_new_model_button {
+    @include mixins.btn-shape('large');
+    @include mixins.btn-primary;
+
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    gap: var(--spacingHorizontalMNudge);
+    > i {
+      margin: 0;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.format_target {
+  padding: var(--spacingVerticalS) 0;
+  margin-bottom: var(--spacingVerticalS);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  span {
+    @include mixins.tag-outlined;
+    margin-inline-end: var(--spacingHorizontalSNudge);
+    &:first-of-type {
+      margin-inline-start: var(--spacingHorizontalSNudge);
+    }
+  }
+}
+
+.format_description {
+  margin-block-end: var(--spacingVerticalS);
+}
+
+#start_files li {
+  &.format_category > label {
+    font-size: var(--fontSizeBase300);
+    font-weight: var(--fontWeightSemibold);
+    line-height: var(--lineHeightBase300);
+    margin-left: var(--spacingHorizontalM);
+  }
+  &.format_entry {
+    @include mixins.btn-base;
+
+    @include mixins.stateful(
+      (
+        "bg": var(--colorNeutralBackground1),
+        "fg": var(--colorNeutralForeground1),
+      
+        "bg-hover": var(--colorNeutralBackground1Hover),
+        "fg-hover": var(--colorNeutralForeground1Hover),
+
+        "bg-pressed": var(--colorNeutralBackground1Pressed),
+        "fg-pressed": var(--colorNeutralForeground1Pressed),
+
+        "bg-selected": var(--colorNeutralBackground1Selected),
+        "fg-selected": var(--colorNeutralForeground1Selected),
+
+        "bg-selected-hover": var(--colorNeutralBackground1Hover),
+        "fg-selected-hover": var(--colorNeutralForeground1Hover),
+
+        "bg-selected-pressed": var(--colorNeutralBackground1Pressed),
+        "fg-selected-pressed": var(--colorNeutralForeground1Pressed),
+      ),
+      ('.selected'),
+    );
+
+    // height: 32px;
+    padding:
+      var(--spacingHorizontalS) var(--spacingHorizontalS)
+      var(--spacingHorizontalS) var(--spacingHorizontalL);
+
+    font-size: var(--fontSizeBase400);
+    font-weight: var(--fontWeightRegular);
+    line-height: var(--lineHeightBase400);
+
+    span.icon_wrapper {
+      width: 24px;
+      height: 22px;
+      align-items: center;
+      margin-inline-end: var(--spacingHorizontalS);
+    }
+
+    &.selected::after {
+      margin-right: 0;
+
+      content: "";
+      margin: 0;
+      width: 20px;
+      height: 20px;
+      background-color: currentColor;
+      mask: url.svg(
+        '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.646 4.147a.5.5 0 0 1 .707-.001l5.484 5.465a.55.55 0 0 1 0 .779l-5.484 5.465a.5.5 0 0 1-.706-.708L12.812 10 7.647 4.854a.5.5 0 0 1-.001-.707" fill="#242424"/></svg>'
+      );
+    }
+  }
+}
+
+@media (max-device-width: 640px) {
+    #start_screen {
+        padding: 0;
+    }
+}

@@ -1,0 +1,101 @@
+@use '../mixins';
+
+.sp-container.sp-reset-enabled {
+    border-radius: 0;
+    background-color: var(--colorNeutralBackground1);
+    box-shadow: var(--shadow8);
+    border-radius: var(--borderRadiusLarge);
+	.sp-picker-container {
+		padding: var(--spacingHorizontalM);
+	}
+
+	.sp-input-container {
+		width: 40%;
+		margin: 0
+	}
+
+	.sp-input {
+		@include mixins.form-standard();
+		padding-inline: var(--spacingHorizontalSNudge);
+	}
+
+	.sp-palette-button-container,
+	.sp-button-container {
+		a {
+			@include mixins.btn-base();
+			@include mixins.btn-shape();
+			min-width: 0;
+			margin-inline-end: var(--spacingHorizontalXXS);
+			padding: 0;
+			width: 30px;
+			height: 30px;
+			> i {
+				margin: 0;
+			}
+			
+			&.sp-choose {
+				@include mixins.btn-primary()
+			}
+			&.sp-cancel {
+				@include mixins.btn-secondary();
+			}
+			&.sp-reset {
+				@include mixins.btn-subtle();
+			}
+		}
+	}
+}
+
+.sp-color,
+.sp-sat,
+.sp-val {
+	border-radius: var(--borderRadiusMedium);
+}
+
+.sp-color {
+	outline: var(--strokeWidthThin) solid var(--colorNeutralStroke1);
+}
+
+.sp-hue {
+	// width: 8px;
+	// right: 4px;
+    border-radius: var(--borderRadiusCircular);
+	// .sp-slider {
+	// 	border: none;
+	// 	background-color: var(--colorNeutralBackgroundInverted);
+	// 	outline: 3px solid var(--colorNeutralBackground1);
+	// 	outline-offset: -3px;
+	// 	box-shadow: var(--shadow4);
+	// 	inset-inline: -4px;
+	// 	width: 16px;
+	// 	height: 16px;
+	// 	margin: 0;
+	// 	transform: translateY(16px);
+	// 	border-radius: var(--borderRadiusCircular);
+	// }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.sp-container.sp-reset-enabled {
+		transition-behavior: allow-discrete;
+		transition-duration: var(--durationNormal);
+		transition-property: transform, opacity, display;
+		transition-timing-function: var(--curveDecelerateMid);
+
+		// animation-name: scaleIn, fadeIn;
+		// animation-duration: var(--durationNormal);
+		// animation-timing-function: var(--curveDecelerateMid);
+		transform-origin: top center;
+
+		&.sp-hidden {
+			opacity: 0;
+			transform: scale(0.85);
+		}
+	}
+	@starting-style {
+		.sp-container.sp-reset-enabled {
+			opacity: 0;
+			transform: scale(0.85);
+		}
+	}
+}

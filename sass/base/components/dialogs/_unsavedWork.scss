@@ -1,0 +1,26 @@
+@use '../../mixins';
+
+// TODO: Theme lists upstream
+.list.unsaved_models_list {
+	border-radius: var(--borderRadiusMedium);
+}
+
+li.unsaved_model {
+	height: 44px;
+	padding: 0 var(--spacingHorizontalSNudge);
+	gap: var(--spacingHorizontalSNudge);
+	border-radius: var(--borderRadiusMedium);
+
+	@include mixins.stateful(
+		(
+			"bg": var(--colorNeutralBackground2),
+			"fg": var(--colorNeutralForeground1),
+			
+			"bg-hover": var(--colorNeutralBackground2Hover),
+			"fg-hover": var(--colorNeutralForeground1Hover),
+			
+			"bg-pressed": var(--colorNeutralBackground2Pressed),
+			"fg-pressed": var(--colorNeutralForeground1Pressed),
+		)
+	);
+}

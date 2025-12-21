@@ -1,0 +1,64 @@
+@use '../../mixins';
+
+input[type=checkbox].toggle_switch {
+    border-radius: var(--borderRadiusCircular);
+    border: 1px solid;
+    line-height: 0;
+    flex-shrink: 0;
+    // font-size: 18px;
+    height: 20px;
+    margin: var(--spacingVerticalS) var(--spacingHorizontalS);
+    width: 40px;
+
+    box-shadow: none;
+
+    @include mixins.stateful((
+      "bg": var(--colorSubtleBackground),
+      "stroke": var(--colorNeutralStrokeAccessible),
+      "fg": var(--colorNeutralStrokeAccessible),
+
+      "bg-hover": var(--colorSubtleBackgroundHover),
+      "stroke-hover": var(--colorNeutralStrokeAccessibleHover),
+      "fg-hover": var(--colorNeutralStrokeAccessibleHover),
+
+      "bg-pressed": var(--colorSubtleBackgroundPressed),
+      "stroke-pressed": var(--colorNeutralStrokeAccessiblePressed),
+      "fg-pressed": var(--colorNeutralStrokeAccessiblePressed),
+
+      "bg-selected": var(--colorCompoundBrandBackground),
+      "stroke-selected": transparent,
+      "fg-selected": var(--colorNeutralForegroundInverted),
+
+      "bg-selected-hover": var(--colorCompoundBrandBackgroundHover),
+      "fg-selected-hover": var(--colorNeutralForegroundInverted),
+
+      "bg-selected-pressed": var(--colorCompoundBrandBackgroundPressed),
+      "fg-selected-pressed": var(--colorNeutralForegroundInverted),
+    ), (':enabled:checked'));
+
+    &::before {
+      $handleSize: 14px;
+      all: unset;
+      content: '';
+      display: block;
+      width: $handleSize;
+      height: $handleSize;
+      background-color: currentColor;
+      
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      border-radius: var(--borderRadiusCircular);
+
+      transition-duration: var(--durationNormal);
+      transition-property:
+        transform;
+      transition-timing-function: var(--curveDecelerateMin)
+    }
+
+    &:checked {
+      &::before {
+        transform: translateX(20px);
+      }
+    }
+}

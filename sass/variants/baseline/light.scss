@@ -1,0 +1,5 @@
+@use "../../base/main";
+@use "../../base/effects";
+@use "../../theme/baseline/light";
+
+@include effects.blurs('light');

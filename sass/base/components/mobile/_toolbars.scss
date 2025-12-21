@@ -1,0 +1,30 @@
+.is_mobile {
+	.toolbar_wrapper {
+		&.narrow.tools {
+			right: var(--spacingHorizontalS);
+			bottom: var(--spacingVerticalS);
+			padding: 0;
+			.toolbar {
+					background-color: var(--colorNeutralBackground1);
+					box-shadow: var(--shadow16);
+					border-radius: var(--borderRadiusXLarge);
+			}
+		}
+	}
+}
+
+.toolbar_wrapper > .toolbar.vertical {
+    width: 40px;
+    flex-direction: column-reverse;
+    .tool {
+        padding: 0;
+        height: 36px;
+        width: 40px;
+    }
+}
+
+.toolbar.vertical .tool.side_menu_tool {
+    height: 48px;
+    flex-direction: column;
+    justify-content: stretch;
+}

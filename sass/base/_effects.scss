@@ -1,0 +1,31 @@
+@mixin blurs($mode) {
+	:where(body:not([theme-glass-effects="false"])) {
+	$flyoutBg: null;
+	$flyoutBgBlendMode: null;
+
+	@if $mode == 'light' {
+		$flyoutBg: url(NoiseAsset_256.png), rgba(252, 252, 252, 0.85);
+		$flyoutBgBlendMode: normal, luminosity;
+ 	} @else {
+		$flyoutBg: url(NoiseAsset_256.png), linear-gradient(0deg, rgba(44, 44, 44, 0.15), rgba(44, 44, 44, 0.15)), rgba(44, 44, 44, 0.96);
+		$flyoutBgBlendMode: normal, color, luminosity;
+	}
+	
+	.contextMenu {
+		background: $flyoutBg;
+		background-blend-mode: $flyoutBgBlendMode;
+		backdrop-filter: blur(30px);
+
+		--colorNeutralBackground1Hover: rgb(from var(--colorNeutralForeground1) r g b / 0.04);
+		--colorNeutralBackground1Pressed: rgb(from var(--colorNeutralForeground1) r g b / 0.025);
+	
+		> li:not(.menu_separator, .menu_search_bar) {
+			background: none;
+		}
+	
+		&.sub {
+			background: var(--colorNeutralBackground1);
+		}
+	}
+	}
+}

@@ -1,0 +1,35 @@
+#mobile_menu_bar {
+	top: calc(var(--menu-bar-height) + var(--spacingVerticalL));
+	background-color: var(--colorNeutralBackground1);
+	box-shadow: var(--shadow8);
+	border-radius: var(--borderRadiusLarge);
+	padding: var(--spacingHorizontalS);
+	gap: var(--spacingHorizontalXS);
+
+	> label {
+		font-weight: var(--fontWeightSemibold);
+    font-size: var(--fontSizeBase300);
+    line-height: var(--lineHeightBase300);
+
+		color: var(--colorNeutralForeground1);
+
+		height: auto;
+		opacity: 1;
+	}
+	> .tool {
+    color: unset;
+    width: 40px;
+    height: 40px;
+    padding-top: 0;
+    border-radius: 5px;
+		i.icon {
+			margin: auto;
+		}
+	}
+}
+
+.is_mobile {
+	.menu_bar_menu {
+		margin-top: calc(20px + var(--spacingVerticalXS));
+	}
+}

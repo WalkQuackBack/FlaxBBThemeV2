@@ -1,0 +1,17 @@
+/*
+name: <THEMENAME>
+author: <THEMEAUTHOR>
+version: <THEMEVERSION>
+borders: false
+options:
+  state-transition:
+    name: State transitions
+    options:
+      true: On
+      false: Off
+  glass-effects:
+    name: Glass effects
+    options:
+      true: On
+      false: Off
+*/

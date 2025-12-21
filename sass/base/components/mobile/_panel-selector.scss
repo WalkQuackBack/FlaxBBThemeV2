@@ -1,0 +1,64 @@
+@use '../../mixins';
+
+.is_mobile {
+	#work_screen {
+		// Doesn't work, wrong layer
+		grid-template-rows:
+			auto
+			minmax(200px, 5000px)
+			var(--status-bar-height)
+			48px !important;
+	}
+	#panel_selector_bar {
+		display: flex;
+		min-height: 48px;
+		padding: 0;
+		
+		gap: var(--spacingVerticalXS);
+		margin: var(--spacingVerticalXS);
+    padding: var(--spacingVerticalXS);
+    background-color: var(--colorNeutralBackground1);
+    box-shadow: var(--shadow4);
+    border-radius: var(--borderRadiusXLarge);
+
+		.panel_selector {
+			color: var(--color-text);
+			border-radius: var(--borderRadiusMedium);
+
+			@include mixins.flex-center;
+			height: auto;
+			flex-grow: 1;
+			flex-basis: auto;
+
+			.icon_wrapper {
+				margin: 0;
+				pointer-events: none;
+			}
+
+			@include mixins.btn-base();
+			@include mixins.btn-subtle(('.selected'));
+		}
+		#mobile_keyboard_menu {
+			aspect-ratio: 1;
+			width: auto;
+			padding: 0;
+			@include mixins.btn-base;
+			@include mixins.btn-secondary();
+			@include mixins.flex-center;
+			&.enabled {
+				@include mixins.btn-primary();
+			}
+			&.enabled::after {
+				content: none;
+			}
+			// 
+		}
+	}
+	&.is_landscape {
+		#panel_selector_bar .panel_selector {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+}

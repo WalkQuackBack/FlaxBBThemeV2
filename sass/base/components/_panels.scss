@@ -1,0 +1,48 @@
+@use '../mixins';
+
+@use './panels/animations';
+@use './panels/textures';
+
+.panel {
+	border: var(--strokeWidthThin) solid var(--colorTransparentStroke);
+}
+
+.panel_tab_list {
+	$edgeCurve: 8;
+	scrollbar-width: none;
+	padding-inline-end: $edgeCurve;
+	overflow-x: auto;
+	> .panel_handle {
+		@include mixins.stateful((
+			'bg': transparent,
+			'fg': var(--colorNeutralForeground2),
+
+			"bg-hover": var(--colorNeutralBackground3Hover),
+			"fg-hover": var(--colorNeutralForeground2Hover),
+
+			"bg-selected": var(--colorNeutralBackground2),
+			"fg-selected": var(--colorNeutralForeground1),
+		), ('.selected'));
+		border-top-left-radius: var(--borderRadiusMedium);
+		border-top-right-radius: var(--borderRadiusMedium);
+		font-size: var(--fontSizeBase400);
+		font-weight: var(--fontWeightRegular);
+		line-height: var(--lineHeightBase400);
+		letter-spacing: 0;
+		text-transform: capitalize;
+
+		position: relative;
+		overflow: visible;
+
+		flex-shrink: 0;
+		@include mixins.curve-edges($edgeCurve);
+	}
+}
+
+.panel_menu_button,
+.in_list_button,
+.text_button {
+	@include mixins.btn-base;
+	@include mixins.btn-subtle;
+	@include mixins.flex-center;
+}

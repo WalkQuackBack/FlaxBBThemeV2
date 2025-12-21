@@ -1,0 +1,31 @@
+@use "animations";
+@use "fonts";
+
+@use "components/form";
+@use "components/contextMenu";
+@use "components/panels";
+@use "components/icons";
+
+@use "components/actionSelector";
+@use "components/header";
+@use "components/startScreen";
+@use "components/dialogs";
+@use "components/spectrum";
+@use "components/tabs";
+@use "components/statusBar";
+
+@use "components/mobile/mobile-menu-bar";
+@use "components/mobile/panel-selector";
+@use "components/mobile/toolbars";
+
+@use "components/mainView";
+
+@use "effects";
+
+* {
+	-webkit-tap-highlight-color: transparent;
+}
+
+h2 {
+	font-weight: 600;
+}

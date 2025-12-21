@@ -1,0 +1,38 @@
+
+.tooltip {
+  border: var(--strokeWidthThin) solid var(--colorTransparentStroke);
+  box-shadow: var(--shadow8);
+  border-radius: var(--borderRadiusSmall);
+  padding: var(--spacingVerticalSNudge) var(--spacingHorizontalS);
+  height: auto;
+
+  font-size: var(--fontSizeBase200);
+  line-height: var(--lineHeightBase200);
+  font-weight: var(--fontWeightRegular);
+
+  margin-top: 32px;
+  .toolbar & {
+    transform: translateY(50%);
+  }
+  .toolbar.vertical & {
+    transform: translateX(-16px);
+  }
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+	.tooltip {
+		transition-behavior: allow-discrete;
+		transition-duration: var(--durationFaster);
+		transition-property: opacity, visibility;
+		transition-timing-function: var(--curveLinear);
+	}
+  .tool:not(:hover) > .tooltip {
+    opacity: 0;
+  }
+	@starting-style {
+		.tooltip {
+			opacity: 0;
+		}
+	}
+}

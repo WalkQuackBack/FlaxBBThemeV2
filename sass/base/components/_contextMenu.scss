@@ -1,0 +1,187 @@
+@use "../mixins";
+@use "@sass-fairy/url";
+
+.contextMenu {
+  background-color: var(--colorNeutralBackground1);
+  color: var(--colorNeutralForeground1);
+  box-shadow: var(--shadow16);
+  border: 1px solid var(--colorTransparentStroke);
+  border-radius: var(--borderRadiusMedium);
+  padding: var(--spacingHorizontalXS);
+
+  transform-origin: top left;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: slideInMenu var(--durationGentle) var(--curveDecelerateMid);
+  }
+
+  contain: style layout;
+
+  li {
+    &:not(.menu_separator, .menu_search_bar) {
+      border-radius: var(--borderRadiusMedium);
+      position: relative;
+      color: var(--colorNeutralForeground2);
+      background-color: var(--colorNeutralBackground1);
+      padding: var(--spacingVerticalSNudge);
+      box-sizing: border-box;
+      max-width: 290px;
+      min-height: 32px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: start;
+      font-size: var(--fontSizeBase300);
+      cursor: pointer;
+      gap: 4px;
+      user-select: none;
+
+      &.focused,
+      &.opened {
+        background: var(--colorNeutralBackground1Hover);
+      }
+
+      @include mixins.stateful(
+        (
+          "bg": var(--colorNeutralBackground1),
+          "stroke": transparent,
+          "fg": var(--colorNeutralForeground2),
+          
+          "bg-hover": var(--colorNeutralBackground1Hover),
+          "stroke-hover": transparent,
+          "fg-hover": var(--colorNeutralForeground2Hover),
+          
+          "bg-pressed": var(--colorNeutralBackground1Pressed),
+          "stroke-pressed": transparent,
+          "fg-pressed": var(--colorNeutralForeground2Pressed),
+          
+          "bg-selected": var(--colorBrandBackground),
+          "fg-selected": var(--colorNeutralForegroundOnBrand)
+        ),
+        ('.enabled', '.marked'),
+        false,
+      );
+
+      > i,
+      > img.icon {
+        margin: auto;
+      }
+
+      &.parent::after {
+        content: "";
+        margin: 0;
+        width: 20px;
+        height: 20px;
+        background-color: currentColor;
+        mask: url.svg(
+          '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.646 4.147a.5.5 0 0 1 .707-.001l5.484 5.465a.55.55 0 0 1 0 .779l-5.484 5.465a.5.5 0 0 1-.706-.708L12.812 10 7.647 4.854a.5.5 0 0 1-.001-.707" fill="#242424"/></svg>'
+        );
+      }
+
+      &.enabled, &.marked {
+        .keybinding_label {
+          color: inherit;
+        }
+      }
+
+      .keybinding_label {
+        opacity: 1;
+
+        padding: 0;
+        padding-left: 2px;
+        padding-right: 2px;
+        font-size: var(--fontSizeBase200);
+        font-weight: var(--fontWeightRegular);
+        line-height: var(--lineHeightBase300);
+        color: var(--colorNeutralForeground3);
+      }
+    }
+    &.menu_separator {
+      position: relative;
+      width: auto;
+      margin-inline: calc(-1 * (var(--spacingVerticalSNudge) / 2));
+      height: var(--strokeWidthThin);
+      margin-block: var(--spacingVerticalXS);
+      background-color: var(--colorNeutralStroke2);
+      &.has_label {
+        height: 32px;
+        margin: 0;
+        background: none;
+        padding-inline: var(--spacingHorizontalXS);
+        > label {
+          background-color: transparent;
+          color: var(--colorNeutralForeground3);
+          margin: 0;
+          height: auto;
+
+          display: flex;
+          align-items: center;
+
+          font-size: var(--fontSizeBase200);
+          font-weight: var(--fontWeightSemibold);
+          line-height: var(--lineHeightBase300);
+        }
+      }
+    }
+    &.menu_search_bar {
+      padding: 0;
+      height: 32px;
+      border: 0;
+      input {
+        @include mixins.form-standard();
+        padding-inline-start: calc(var(--spacingHorizontalMNudge) + 20px);
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 20px;
+        height: 20px;
+        right: var(--spacingHorizontalMNudge);
+        background-color: currentColor;
+        pointer-events: none;
+        mask: url.svg(
+          '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.73 13.436a6.5 6.5 0 1 1 .707-.707l3.416 3.418a.5.5 0 0 1-.637.764l-.07-.057zm-.71-.71q.385-.32.707-.706a5.5 5.5 0 1 0-.707.707" fill="#242424"/></svg>'
+        );
+      }
+      > div {
+        display: none;
+      }
+    }
+  }
+
+  .menu_more_button {
+		width: 32px;
+    height: 32px;
+		margin: -6px;
+		padding: 0;
+		border-radius: var(--borderRadiusMedium);
+		display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      right: calc(-1 * var(--spacingVerticalSNudge));
+      pointer-events: all;
+    }
+	}
+  
+  &.hybridParent.opened {
+    background: var(--colorNeutralBackground1Selected);
+  }
+}
+
+@keyframes slideInMenu {
+  from {
+    clip-path: inset(max(25%, 32px) -100vw -100vw -100vw);
+    transform: translateY(min(-25%, -32px));
+  }
+  to {
+    clip-path: inset(0 -100vw -100vw -100vw);
+  }
+}

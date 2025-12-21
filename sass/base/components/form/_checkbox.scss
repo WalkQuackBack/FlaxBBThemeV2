@@ -1,0 +1,58 @@
+@use '@sass-fairy/url';
+@use '../../mixins';
+
+input[type=checkbox]:not(.toggle_switch) {
+	position: relative;
+	@include mixins.flex-center;
+
+	// color: var(--fui-Checkbox__indicator--color);
+	// background-color: var(--fui-Checkbox__indicator--backgroundColor);
+	// border-color: var(--fui-Checkbox__indicator--borderColor, var(--colorNeutralStrokeAccessible));
+	border-style: solid;
+	border-width: var(--strokeWidthThin);
+	border-radius: var(--borderRadiusSmall);
+	margin: var(--spacingVerticalS) var(--spacingHorizontalS);
+	// fill: currentcolor;
+	min-width: 0;
+	height: 16px;
+	width: 16px;
+
+	@include mixins.stateful((
+		'bg': transparent,
+		'fg': var(--colorNeutralStrokeAccessible),
+		'stroke': var(--colorNeutralStrokeAccessible),
+
+		'stroke-hover': var(--colorNeutralStrokeAccessibleHover),
+		'stroke-pressed': var(--colorNeutralStrokeAccessiblePressed),
+
+		'bg-selected': var(--colorCompoundBrandBackground),
+		'fg-selected': var(--colorNeutralForegroundInverted),
+		'stroke-selected': var(--colorCompoundBrandBackground),
+
+		'bg-selected-hover': var(--colorCompoundBrandBackgroundHover),
+		'stroke-selected-hover': var(--colorCompoundBrandBackgroundHover),
+
+		'bg-selected-pressed': var(--colorCompoundBrandBackgroundPressed),
+		'stroke-selected-pressed': var(--colorCompoundBrandBackgroundPressed),
+	), (':checked'));
+	
+	&::before {
+		content: none
+	}
+	&:checked {
+		&::before {
+			--fui-Checkbox__indicator--borderColor: var(--colorCompoundBrandBackground);
+			--fui-Checkbox__indicator--color: var(--colorNeutralForegroundOnBrand);
+			--fui-Checkbox__indicator--backgroundColor: var(--colorCompoundBrandBackground);
+		}
+		&::after {
+			content: '';
+			display: block;
+			width: 12px;
+			height: 12px;
+			flex-shrink: 0;
+			background-color: currentColor;
+			mask: url.svg('<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.854 3.146a.5.5 0 0 1 0 .708l-4.5 4.5a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L5 7.293l4.146-4.147a.5.5 0 0 1 .708 0" fill="#242424"/></svg>');
+		}
+	}
+}

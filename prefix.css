@@ -1,0 +1,35 @@
+body {
+    --color-ui: var(--colorNeutralBackground2);
+    --color-back: var(--colorNeutralBackground3);
+    --color-dark: var(--colorNeutralBackground4);
+    --color-border: var(--colorNeutralStroke1);
+    --color-selected: var(--colorNeutralBackground2Selected);
+    --color-elevated: var(--colorNeutralBackground1);
+    --color-button: var(--colorNeutralBackground2);
+    --color-bright_ui: var(--colorNeutralBackground1);
+    --color-accent: var(--colorBrandBackground);
+    --color-frame: var(--colorNeutralBackground3);
+    --color-text: var(--colorNeutralForeground1);
+    --color-light: var(--colorNeutralForeground2);
+    --color-accent_text: var(--colorNeutralForegroundOnBrand);
+    --color-bright_ui_text: var(--colorNeutralForeground1);
+    --color-subtle_text: var(--colorNeutralForeground3);
+    --color-grid: #495061;
+    --color-wireframe: #576f82;
+    --color-checkerboard: var(--colorNeutralBackground4);
+
+    --font-custom-main: Segoe UI Variable Text;
+	--font-custom-headline: Segoe UI Variable Display;
+	--font-custom-code: Consolas;
+}
+
+@scope (thumbnail) {
+    .theme_preview_menu_header {
+        background: yellow;
+    }
+}
+
+body {
+	--font-main: var(--font-custom-main), var(--fontFamilyBase), Assistant, segoe ui, sans-serif;
+	--font-headline: var(--font-custom-headline), var(--fontFamilyBase), Montserrat, segoe ui, sans-serif;
+}

@@ -1,0 +1,21 @@
+@use '../../mixins';
+
+$pluginListGrid: var(--spacingHorizontalM);
+
+#plugin_list {
+	display: flex;
+	flex-direction: column;
+
+	justify-content: flex-start;
+	align-items: center;
+
+	padding: $pluginListGrid;
+	gap: $pluginListGrid;
+
+	> li {
+		@include mixins.card(('.selected'));
+		--fui-Card--size: var(--spacingHorizontalM);
+		flex-shrink: 0;
+		margin: 0;
+	}
+}

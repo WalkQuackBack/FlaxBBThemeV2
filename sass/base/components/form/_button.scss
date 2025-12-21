@@ -1,0 +1,12 @@
+@use '../../mixins';
+
+:where(button) {
+  @include mixins.btn-base;
+  @include mixins.btn-shape;
+  &:not(.confirm_btn) {
+    @include mixins.btn-secondary;
+  }
+  &.confirm_btn {
+    @include mixins.btn-primary;
+  }
+}

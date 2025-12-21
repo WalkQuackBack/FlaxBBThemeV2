@@ -1,0 +1,81 @@
+@use '@sass-fairy/url';
+@use '../mixins';
+
+@use './form/bar-item-list';
+@use './form/button';
+@use './form/checkbox';
+@use './form/dialog-form-btn';
+@use './form/dialog';
+@use './form/switch';
+@use './form/tool';
+@use './form/tooltip';
+
+input {
+  &:not([type]), &.dark_bordered {
+    @include mixins.form-standard();
+  }
+}
+
+.numeric_input > div.tool {
+  inset-inline-end: var(--strokeWidthThin);
+  inset-block: var(--strokeWidthThin);
+  height: auto;
+  width: auto;
+  i {
+    $iconSize: 20px;
+    height: $iconSize;
+    line-height: $iconSize;
+    font-size: $iconSize;
+  }
+}
+
+div.nslide {
+  @include mixins.form-standard();
+  justify-content: center;
+}
+
+.nslide_tool {
+  position: relative;
+}
+
+div.nslide_arrow {
+  position: absolute;
+  display: inline-block;
+  width: 20px;
+  height: 30px;
+  margin-top: 0;
+  @include mixins.btn-base;
+
+  &.na_left,
+  &.na_right {
+    margin-inline-start: 0 !important;
+  }
+
+  &.na_left {
+    left: 0;
+  }
+  &.na_right {
+    right: 0;
+  }
+}
+
+div.bb-select, select {
+  @include mixins.form-standard();
+}
+
+div.bb-select {
+  justify-content: space-between;
+  &::before {
+    content: none;
+  }
+  &::after {
+    content: '';
+    flex-shrink: 0;
+    float: right;
+    width: 20px;
+    height: 20px;
+    right: var(--spacingHorizontalMNudge);
+    background-color: currentColor;
+    mask: url.svg('<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.854 7.646a.5.5 0 0 1 .001.707l-5.465 5.484a.55.55 0 0 1-.78 0L4.147 8.353a.5.5 0 1 1 .708-.706L10 12.812l5.147-5.165a.5.5 0 0 1 .707-.001" fill="#242424"/></svg>');
+  }
+}

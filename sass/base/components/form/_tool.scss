@@ -1,0 +1,112 @@
+@use '@sass-fairy/url';
+@use '../../mixins';
+
+// Tools
+.tool {
+  border-radius: var(--borderRadiusMedium);
+  &:not(.widget) {
+    border: var(--strokeWidthThin) solid var(--colorTransparentStroke);
+  }
+
+  margin-inline: 0;
+
+  &:not([hidden], .hidden) {
+    display: flex;
+  }
+
+  &.wide {
+    padding: 0;
+  }
+
+  min-width: 32px;
+  height: 32px;
+
+  &:not(.side_menu_tool) {
+    @include mixins.btn-subtle();
+  }
+
+  &:active {
+    i {
+      padding: 0;
+      &.fa_big {
+        padding-top: 1px;
+      }
+    }
+  }
+
+  &.enabled, &.selected {
+    background: var(--colorNeutralBackground1Selected);
+    color: var(--colorNeutralForeground1Selected);
+    border-color: var(--colorNeutralStrokeAccessible);
+  }
+
+  i.icon {
+    margin: 5px auto;
+  }
+  &.side_menu_tool {
+    @include mixins.stateful((
+      'stroke-hover': var(--colorNeutralStroke1)
+    ));
+    @media (hover: hover) {
+      &:hover {
+        i.icon.action_more_options {
+          border-inline-start-color: var(--colorNeutralStroke1);
+        }
+        &.enabled, &.selected {
+          i.icon.action_more_options {
+            border-inline-start-color: var(--colorNeutralStrokeAccessible);
+          }
+        }
+      }
+    }
+    &.enabled, &.selected {
+      @include mixins.stateful((
+        'stroke-hover': var(--colorNeutralStrokeAccessible)
+      ));
+    }
+    
+    i.icon {
+      @include mixins.btn-subtle();
+      margin: 0;
+      flex-grow: 1;
+      max-width: none;
+
+      &:not(.action_more_options) {
+        border-top-left-radius: inherit;
+        border-bottom-left-radius: inherit;
+        @include mixins.flex-center;
+        align-self: stretch;
+        width: auto;
+        height: auto;
+        max-width: none;
+      }
+        
+      &.action_more_options {
+        border-top-right-radius: inherit;
+        border-bottom-right-radius: inherit;
+        border-inline-start: var(--strokeWidthThin) solid transparent;
+        padding: 0;
+        min-width: 16px;
+        min-height: 16px;
+        font-size: 0;
+
+        @include mixins.flex-center;
+
+        &::after {
+          content: '';
+          display: block;
+          width: 12px;
+          height: 12px;
+          background-color: currentColor;
+          mask: url.svg('<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.146 4.646a.5.5 0 0 1 .708 0L6 7.793l3.146-3.147a.5.5 0 1 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 0 1 0-.708" fill="#242424"/></svg>');
+        }
+      }
+    }
+  }
+}
+
+.toolbar > .tool.toolbar_menu > i {
+  width: 20px;
+  margin: auto;
+  font-size: 20px;
+}

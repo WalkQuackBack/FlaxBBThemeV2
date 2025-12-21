@@ -1,0 +1,95 @@
+@use '../mixins';
+
+#tab_bar {
+	flex-shrink: 0;
+	height: 32px;
+	padding-left: var(--spacingHorizontalXS);
+	#tab_bar_list {
+		display: flex;
+		flex-direction: row;
+		flex-grow: 1;
+		position: relative;
+		white-space: nowrap;
+		overflow-x: auto;
+		overflow-y: hidden;
+		margin-inline-end: auto;
+		scrollbar-width: none;
+		scroll-behavior: smooth;
+	}
+	.project_tab_close_button {
+		width: 20px;
+		height: 20px;
+		@include mixins.flex-center;
+		opacity: 0;
+		@include mixins.btn-base();
+		@include mixins.btn-subtle();
+	}
+	.project_tab {
+		cursor: default;
+		width: 240px;
+		min-width: 120px;
+		height: 100%;
+		padding: 0 var(--spacingHorizontalS);
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		margin-inline-start: 0;
+
+		border-radius: var(--borderRadiusLarge) var(--borderRadiusLarge) 0 0;
+
+		@include mixins.stateful(
+			(
+				"bg": transparent,
+				"fg": var(--colorNeutralForeground2),
+
+				"bg-hover": var(--colorNeutralBackground3Hover),
+				"fg-hover": var(--colorNeutralForeground2Hover),
+
+				"bg-selected": var(--colorNeutralBackground2),
+				"fg-selected": var(--colorNeutralForeground1),
+			),
+			('.selected')
+		);
+		
+		@include mixins.curve-edges(8);
+
+		&.selected .project_tab_close_button {
+			opacity: 1;
+		}
+		@media (hover: hover) {
+			&:hover .project_tab_close_button {
+				opacity: 1;
+			}	
+		}
+
+		> label {
+			overflow: hidden;
+			width: calc(100% - 20px);
+			flex: 1 1 auto;
+			padding: 0 4px;
+			pointer-events: none;
+
+			font-size: var(--fontSizeBase300);
+			font-weight: var(--fontWeightRegular);
+			line-height: var(--lineHeightBase300);
+		}
+	}
+
+}
+
+// Patch code for themes that use non default or dynamic tab width
+#tab_bar.drag_mode .project_tab {
+  transition-duration: var(--durationNormal);
+	transition-property: transform;
+	transition-timing-function: var(--curveDecelerateMax)
+}
+
+#tab_bar .project_tab.move_back {
+  left: 0;
+  transform: translateX(-100%);
+}
+
+#tab_bar .project_tab.move_forth {
+  left: 0;
+  transform: translateX(100%);
+}
