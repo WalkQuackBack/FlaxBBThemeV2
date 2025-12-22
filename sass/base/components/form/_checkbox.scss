@@ -1,5 +1,6 @@
 @use '@sass-fairy/url';
 @use '../../mixins';
+@use '../../icons';
 
 input[type=checkbox]:not(.toggle_switch) {
 	position: relative;
@@ -46,13 +47,8 @@ input[type=checkbox]:not(.toggle_switch) {
 			--fui-Checkbox__indicator--backgroundColor: var(--colorCompoundBrandBackground);
 		}
 		&::after {
-			content: '';
-			display: block;
-			width: 12px;
-			height: 12px;
+			@include mixins.icon(12, icons.$checkmarkRegular12);
 			flex-shrink: 0;
-			background-color: currentColor;
-			mask: url.svg('<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.854 3.146a.5.5 0 0 1 0 .708l-4.5 4.5a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L5 7.293l4.146-4.147a.5.5 0 0 1 .708 0" fill="#242424"/></svg>');
 		}
 	}
 }

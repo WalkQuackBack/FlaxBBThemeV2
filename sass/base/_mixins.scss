@@ -1,6 +1,19 @@
+@use '@sass-fairy/url';
+
 @use "sass:list";
 @use "sass:map";
 @use "sass:selector";
+
+@use 'icons';
+
+@mixin icon($size: 20, $svg: icons.$squareRegular20) {
+	content: '';
+	width: $size;
+	height: $size;
+	display: block;
+	background-color: currentColor;
+	mask: url.svg(#{$svg});
+}
 
 @mixin flex-center {
   display: flex;

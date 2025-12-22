@@ -1,8 +1,10 @@
 {
   "tasks": {
-    "build": "deno --watch -A compile.ts"
+    "build": "deno --watch -A compile.ts",
+    "build-icons": "deno -A buildFluentIcons.ts"
   },
   "imports": {
+    "@fluentui/svg-icons": "npm:@fluentui/svg-icons@^1.1.316",
     "@sass-fairy/exception": "npm:@sass-fairy/exception@^1.1.1",
     "@sass-fairy/list": "npm:@sass-fairy/list@^1.2.4",
     "@sass-fairy/string": "npm:@sass-fairy/string@^1.3.1",

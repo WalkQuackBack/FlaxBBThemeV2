@@ -1,5 +1,6 @@
 @use '@sass-fairy/url';
 @use '../mixins';
+@use '../icons';
 
 #start_screen {
   > content {
@@ -136,15 +137,9 @@
 
     &.selected::after {
       margin-right: 0;
+      margin-block: 1px;
 
-      content: "";
-      margin: 0;
-      width: 20px;
-      height: 20px;
-      background-color: currentColor;
-      mask: url.svg(
-        '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.646 4.147a.5.5 0 0 1 .707-.001l5.484 5.465a.55.55 0 0 1 0 .779l-5.484 5.465a.5.5 0 0 1-.706-.708L12.812 10 7.647 4.854a.5.5 0 0 1-.001-.707" fill="#242424"/></svg>'
-      );
+      @include mixins.icon(20, icons.$chevronRightRegular20);
     }
   }
 }

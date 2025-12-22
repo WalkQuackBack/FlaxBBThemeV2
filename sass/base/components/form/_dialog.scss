@@ -1,6 +1,7 @@
 
 @use '@sass-fairy/url';
 @use '../../mixins';
+@use '../../icons';
 
 // Form bars
 .dialog_form_description {
@@ -14,13 +15,8 @@
   @include mixins.flex-center;
 
   &::before {
-    content: '';
+    @include mixins.icon(20, icons.$questionRegular20);
     margin: 0;
-    inline-size: 20px;
-    block-size: 20px;
-    background-color: currentColor;
-    display: block;
-    mask: url.svg('<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 3C7.794 3 6 4.794 6 7a.5.5 0 0 0 1 0c0-1.654 1.346-3 3-3s3 1.346 3 3c0 1.249-.692 1.863-1.575 2.62l-.032.027C10.534 10.384 9.5 11.27 9.5 13v.5a.5.5 0 0 0 1 0V13c0-1.249.692-1.863 1.575-2.62l.032-.027C12.967 9.615 14 8.731 14 7c0-2.206-1.794-4-4-4m0 14a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5" fill="#242424"/></svg>');
   }
 }
 .dialog_bar {
@@ -39,12 +35,15 @@
 
 // Dialog message box command
 .dialog_message_box_command {
-  all: unset;
   @include mixins.btn-base;
   @include mixins.btn-secondary;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  font-size: var(--fontSizeBase300);
+  font-weight: var(--fontWeightRegular);
+  line-height: var(--lineHeightBase300);
 
   padding: var(--spacingHorizontalS) var(--spacingHorizontalM);
 
@@ -52,12 +51,7 @@
     content: none;
   }
   &::after {
-    content: '';
-    display: block;
-    width: 20px;
-    height: 20px;
-    background-color: currentColor;
-    mask: url.svg('<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.646 4.147a.5.5 0 0 1 .707-.001l5.484 5.465a.55.55 0 0 1 0 .779l-5.484 5.465a.5.5 0 0 1-.706-.708L12.812 10 7.647 4.854a.5.5 0 0 1-.001-.707" fill="#242424"/></svg>');
+    @include mixins.icon(20, icons.$chevronRightRegular20);
   }
 }
 
