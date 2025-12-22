@@ -1,6 +1,52 @@
 @use '../../mixins';
 
-#bar_item_list li {
-	@include mixins.btn-base;
-	@include mixins.btn-subtle;
+#bar_item_list {
+	max-height: 600px;
+	background-color: var(--colorNeutralBackground2);
+	border-radius: var(--borderRadiusMedium);
+	li {
+		@include mixins.btn-base;
+		
+		@include mixins.stateful(
+			(
+				"bg": var(--colorNeutralBackground2),
+				"fg": var(--colorNeutralForeground1),
+				
+				"bg-hover": var(--colorNeutralBackground2Hover),
+				"fg-hover": var(--colorNeutralForeground1Hover),
+				
+				"bg-pressed": var(--colorNeutralBackground2Pressed),
+				"fg-pressed": var(--colorNeutralForeground1Pressed),
+			),
+			(),
+			false
+    );
+
+		height: 36px;
+
+		padding: var(--spacingHorizontalS);
+		gap: var(--spacingHorizontalS);
+
+		align-items: flex-start;
+
+		font-size: var(--fontSizeBase300);
+		font-weight: var(--fontWeightRegular);
+		line-height: var(--lineHeightBase300);
+	}
+}
+
+#bar_items_current {
+	background-color: var(--colorNeutralBackground2);
+	border-radius: var(--borderRadiusMedium);
+	padding: var(--spacingHorizontalSNudge);
+	border: none;
+	li {
+		height: 32px;
+	}
+	.tool .icon_wrapper {
+		margin: 5px auto;
+		i {
+			margin: 0;
+		}
+	}
 }
