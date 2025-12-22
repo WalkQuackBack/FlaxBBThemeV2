@@ -3,6 +3,7 @@ import * as path from "@std/path";
 
 import { Buffer } from "node:buffer";
 import process from "node:process";
+import { createHash } from "node:crypto";
 
 import browserslist from 'browserslist';
 import { transform, browserslistToTargets } from "lightningcss";
@@ -59,6 +60,25 @@ function formatBytes(bytes: number, decimals = 2) {
     return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
 }
 
+const HASH_SALT = '4b2ca1dc-11e2-4794-910c-b3d2e2d2dfbd';
+const TARGET_REGEX = /^--(?:fui|(?!colorNeutralBackground[1234]\b|colorNeutralStroke1\b|colorNeutralBackground2Selected\b|colorBrandBackground\b|colorNeutralForeground[123]\b|colorNeutralForegroundOnBrand\b|fontFamilyBase\b)(?:borderRadius|fontSize|lineHeight|fontFamily|fontWeight|strokeWidth|spacing|duration|curve|color[A-Z]|shadow)).*/
+function hashName(name: string): string {
+  const baseName = name.slice(2);
+  const hash = createHash("sha256")
+    .update(baseName + HASH_SALT)
+    .digest("hex")
+    .slice(0, 8);
+  return `--${hash}`;
+}
+
+const visitor = {
+  DashedIdent(ident: string): string | void {
+    if (TARGET_REGEX.test(ident)) {
+      return hashName(ident);
+    }
+  }
+}
+
 const compileToTheme = async (
   inputPath: string,
   variant: string,
@@ -66,7 +86,7 @@ const compileToTheme = async (
   // Cannot be minfifed
   const PREFIX = transform({
     filename: "",
-    minify: false,
+    minify: true,
     code: Buffer.from(
       readFileSync("./prefix.css"),
     ),
@@ -82,8 +102,9 @@ const compileToTheme = async (
   );
   const result = transform({
     filename: "",
-    minify: true,
+    minify: false,
     code: Buffer.from(compiled.css),
+    visitor, 
     targets
   });
 
@@ -178,12 +199,12 @@ const buildAll = async () => {
 
   try {
     await createFoldersAndCompile(folders, IN);
-    console.log(`Build complete in ${Date.now() - start}ms`);
   } catch (error) {
     console.error("Build failed");
     console.error(error);
   } finally {
     isBuilding = false;
+    console.log(`Build complete in ${Date.now() - start}ms`);
   }
 };
 
