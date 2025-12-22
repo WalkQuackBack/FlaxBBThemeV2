@@ -34,3 +34,9 @@ h2 {
 .accent_color {
 	color: var(--colorBrandForeground1);
 }
+
+.small_text {
+  font-size: var(--fontSizeBase200);
+  font-weight: var(--fontWeightRegular);
+  line-height: var(--lineHeightBase200);
+}
