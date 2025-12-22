@@ -35,6 +35,34 @@ dialog {
 		.dialog_bar.button_bar {
 			padding-block-start: var(--spacingVerticalXL);
 		}
+
+		// Config dialogues
+		&.config_dialog {
+			transform-origin: top center;
+			padding: var(--spacingHorizontalL);
+			// TODO: Upstream this?
+			.dialog_bar {
+				margin-block: var(--spacingVerticalXS);
+			}
+		}
+
+		.config_dialog_title {
+			padding: 0;
+			margin-bottom: 0;
+			margin-inline-end: 0;
+			text-align: start;
+			text-transform: none;
+			color: var(--colorNeutralForeground1);
+			border-radius: inherit;
+
+			font-size: var(--fontSizeBase400);
+			font-weight: var(--fontWeightSemibold);
+			line-height: var(--lineHeightBase400);
+			.dialog_close_button {
+				right: var(--spacingHorizontalL);
+				top: calc(var(--spacingVerticalL) - 4px);
+			}
+		}
 	}
 }
 
@@ -247,20 +275,4 @@ dialog#theme h2 {
 			animation-timing-function: var(--curveDecelerateMid);
 		}
 	}
-}
-
-// Config dialogues
-
-.config_dialog_title {
-    padding: 0;
-    margin-bottom: 0;
-    margin-inline-end: 0;
-    text-align: start;
-    text-transform: none;
-    color: var(--colorNeutralForeground1);
-    border-radius: inherit;
-
-	font-size: var(--fontSizeBase500);
-	font-weight: var(--fontWeightSemibold);
-	line-height: var(--lineHeightBase500);
 }
