@@ -339,6 +339,7 @@ body:not([theme-state-transition="false"]) {
   border-radius: var(--fui-Card--border-radius);
   padding: var(--fui-Card--size);
   gap: var(--fui-Card--size);
+  border: var(--strokeWidthThin) solid var(--colorTransparentStroke);
   display: flex;
   position: relative;
   box-sizing: border-box;
