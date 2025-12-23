@@ -117,3 +117,12 @@
         }
     }
 }
+
+.preview .preview_menu {
+    right: calc(var(--spacingHorizontalXS) + 1px);
+    top: var(--spacingVerticalXS);
+    padding: var(--spacingVerticalXXS);
+    border-radius: var(--borderRadiusLarge);
+    box-shadow: var(--shadow4);
+    background-color: var(--colorNeutralBackground1);
+}
