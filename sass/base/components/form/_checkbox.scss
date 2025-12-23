@@ -5,6 +5,7 @@
 input[type=checkbox]:not(.toggle_switch) {
 	position: relative;
 	@include mixins.flex-center;
+	display: inline-flex;
 
 	// color: var(--fui-Checkbox__indicator--color);
 	// background-color: var(--fui-Checkbox__indicator--backgroundColor);
