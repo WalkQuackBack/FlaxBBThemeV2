@@ -4,6 +4,10 @@
 
 #center {
     border: var(--strokeWidthThin) solid var(--colorTransparentStroke);
+    border-radius: var(--borderRadiusXLarge);
+    canvas {
+        border-radius: var(--borderRadiusXLarge);
+    }
 }
 
 #preview {
