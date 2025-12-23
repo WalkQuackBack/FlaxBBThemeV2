@@ -4,6 +4,7 @@
 @use './panels/layers';
 @use './panels/textures';
 @use './panels/timeline';
+@use './panels/uv';
 
 .panel {
 	border: var(--strokeWidthThin) solid var(--colorTransparentStroke);

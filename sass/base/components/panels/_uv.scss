@@ -1,0 +1,119 @@
+@use '../../mixins';
+
+#uv_cube_face_bar {
+	height: 32px;
+	gap: var(--spacingHorizontalXS);
+	li {
+		margin: 0;
+		padding: 0;
+		@include mixins.btn-base;
+		@include mixins.btn-subtle(('.selected'));
+		@include mixins.flex-center;
+
+		position: relative;
+
+		font-size: var(--fontSizeBase300);
+		font-weight: var(--fontWeightRegular);
+		line-height: var(--lineHeightBase300);
+
+		// Fill touch gap
+		&::after {
+			content: '';
+			position: absolute;
+			inset: calc(var(--spacingHorizontalXS) / 2 * -1);
+		}
+	}
+}
+
+#uv_resolution_status {
+	@include mixins.btn-base;
+	@include mixins.btn-subtle();
+	margin: 0;
+	padding: 0 var(--spacingHorizontalSNudge);
+}
+
+.face_properties_toggle > i {
+	margin: 4px auto;
+}
+
+#uv_frame {
+	--color-uv-unselected: var(--color-grid);
+	--color-uv-selected: white;
+	--color-uv-hover: var(--colorBrandStroke1);
+	--color-uv-background: rgb(from var(--colorCompoundBrandBackground) r g b / 0.14);
+	--color-uv-background-hover: rgb(from var(--colorCompoundBrandBackground) r g b / 0.3);
+	--uv-line-width: var(--strokeWidthThin);
+}
+
+.uv_resize_corner {
+	background-color: white;
+	border: var(--strokeWidthThin) solid black;
+	border-radius: var(--borderRadiusCircular);
+}
+
+.cube_uv_face {
+	font-size: var(--fontSizeBase300);
+  font-weight: var(--fontWeightRegular);
+  line-height: var(--lineHeightBase300);
+	color: var(--colorNeutralForeground2);
+	> .main_corner::after {
+		height: 12px;
+		width: 12px;
+		border-radius: var(--borderRadiusCircular);
+	}
+}
+
+.uv_editor_sliders {
+	gap: var(--spacingHorizontalXS);
+	padding: var(--spacingHorizontalXS);
+	padding-inline-start: 0;
+	height: auto;
+}
+
+#uv_face_properties > ul {
+	background-color: var(--colorNeutralBackground3);
+}
+
+.uv_face_properties_line {
+	font-size: var(--fontSizeBase300);
+  font-weight: var(--fontWeightRegular);
+  line-height: var(--lineHeightBase300);
+	padding: 0 var(--spacingHorizontalS);
+	gap: var(--spacingHorizontalS);
+
+	cursor: pointer;
+
+	label {
+		pointer-events: none;
+	}
+
+	&.selected label {
+		text-decoration: none;
+	}
+
+	&:nth-child(even) {
+		background-color: rgb(from var(--colorNeutralForeground1) r g b / 0.025);
+	}
+
+	@include mixins.stateful(
+		(
+			"bg": var(--colorNeutralBackground3),
+			"fg": var(--colorNeutralForeground1),
+
+			"bg-hover": var(--colorNeutralBackground3Hover),
+			"fg-hover": var(--colorNeutralForeground1Hover),
+
+			"bg-selected": var(--colorNeutralBackground3Selected),
+			"fg-selected": var(--colorNeutralForeground1Selected),
+
+			"bg-selected-hover": var(--colorNeutralBackground3Hover),
+			"fg-selected-hover": var(--colorNeutralForeground1Hover),
+			),
+		('.selected')
+	);
+}
+
+.face_properties_texture {
+	@include mixins.btn-base;
+	@include mixins.btn-subtle;
+}
