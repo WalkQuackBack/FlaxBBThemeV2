@@ -1,0 +1,62 @@
+// Miss: no slider inner fill
+
+@mixin slider-thumb {
+	appearance: none;
+	height: var(--fui-Slider__thumb--size);
+	width: var(--fui-Slider__thumb--size);
+	background-color: var(--fui-Slider__thumb--color);
+	border: none;
+	margin-top: calc(-0.5 * var(--fui-Slider__thumb--size) + 2px);
+	outline: calc(var(--fui-Slider__thumb--size) * .05) solid var(--colorNeutralStroke1);
+	box-shadow:
+		0 0 0 calc(var(--fui-Slider__thumb--size) * .2) var(--colorNeutralBackground1) inset;
+	border-radius: var(--borderRadiusCircular);
+
+	&::after {
+		content: '';
+	}
+}
+
+input[type=range] {
+	background-color: transparent;
+	height: 32px;
+	position: relative;
+	--color-track: var(--color-grid);
+	--color-thumb: var(--color-accent);
+	--color-center: var(--color-back);
+
+	--fui-Slider__thumb--color: var(--colorCompoundBrandBackground);
+	--fui-Slider__progress--color: var(--colorCompoundBrandBackground);
+	--fui-Slider__rail--color: var(--colorNeutralStrokeAccessible);
+	--fui-Slider__rail--size: 4px;
+	--fui-Slider__inner-thumb--radius: 6px;
+	--fui-Slider__thumb--size: 20px;
+
+	&:hover {
+		--fui-Slider__progress--color: var(--colorCompoundBrandBackgroundHover);
+		--fui-Slider__thumb--color: var(--colorCompoundBrandBackgroundHover);
+	}
+	&:active {
+		--fui-Slider__progress--color: var(--colorCompoundBrandBackgroundPressed);
+		--fui-Slider__thumb--color: var(--colorCompoundBrandBackgroundPressed);
+	}
+}
+input[type=range]::-webkit-slider-thumb {
+	@include slider-thumb();
+}
+input[type=range]::-moz-range-thumb {
+	@include slider-thumb();
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+	height: var(--fui-Slider__rail--size);
+	background: var(--fui-Slider__rail--color);
+	border-radius: var(--borderRadiusXLarge);
+}
+input[type=range]::-moz-range-track {
+	width: 100%;
+	height: 2px;
+	cursor: pointer;
+	background: var(--color-track);
+	border-radius: 3px;
+}
