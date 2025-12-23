@@ -7,6 +7,10 @@
 
 .panel {
 	border: var(--strokeWidthThin) solid var(--colorTransparentStroke);
+	.bar.next_to_title {
+		margin-top: -34px;
+		margin-right: 32 * 2;
+	}
 }
 
 .panel_tab_list {
