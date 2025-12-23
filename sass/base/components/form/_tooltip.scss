@@ -11,9 +11,6 @@
   font-weight: var(--fontWeightRegular);
 
   margin-top: 32px;
-  .toolbar & {
-    transform: translateY(50%);
-  }
   .toolbar.vertical & {
     transform: translateX(-16px);
   }
