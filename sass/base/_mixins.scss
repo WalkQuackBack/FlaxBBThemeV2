@@ -482,3 +482,43 @@ body:not([theme-state-transition="false"]) {
     }
   }
 }
+
+@mixin bar-item-list-item($clickable: true) {
+  @include btn-base;
+  @if ($clickable) {
+    @include stateful(
+      (
+        "bg": var(--colorNeutralBackground2),
+        "fg": var(--colorNeutralForeground1),
+        
+        "bg-hover": var(--colorNeutralBackground2Hover),
+        "fg-hover": var(--colorNeutralForeground1Hover),
+        
+        "bg-pressed": var(--colorNeutralBackground2Pressed),
+        "fg-pressed": var(--colorNeutralForeground1Pressed),
+      ),
+      (),
+      false
+    );
+  } @else {
+    cursor: default;
+  }
+
+  height: 36px;
+
+  padding: 0 var(--spacingHorizontalS);
+  gap: var(--spacingHorizontalS);
+
+  align-items: center;
+
+  font-size: var(--fontSizeBase300);
+  font-weight: var(--fontWeightRegular);
+  line-height: var(--lineHeightBase300);
+
+  .icon, .icon_wrapper {
+    margin-top: 4px;
+  }
+  .icon_wrapper {
+    height: 24px;
+  }
+}
