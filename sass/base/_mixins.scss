@@ -489,6 +489,74 @@ body:not([theme-state-transition="false"]) {
   }
 }
 
+@mixin tab-list-item($selectedSelectors: ()) {
+  padding: var(--spacingVerticalM) var(--spacingHorizontalMNudge);
+  border-radius: var(--borderRadiusMedium);
+
+  cursor: pointer;
+
+  font-size: var(--fontSizeBase300);
+  line-height: var(--lineHeightBase300);
+  font-weight: var(--fontWeightRegular);
+
+  position: relative;
+
+  justify-content: center;
+  text-transform: none;
+  grid-template-rows: auto;
+  grid-template-columns: auto;
+  grid-auto-flow: column;
+  flex-shrink: 0;
+  outline-style: none;
+  border: none;
+
+  @include stateful(
+    (
+      "bg": var(--colorTransparentBackground),
+      "fg": var(--colorNeutralForeground2),
+      
+      "bg-hover": var(--colorTransparentBackgroundHover),
+      "fg-hover": var(--colorNeutralForeground2Hover),
+      
+      "bg-pressed": var(--colorTransparentBackgroundPressed),
+      "fg-pressed": var(--colorNeutralForeground2Pressed),
+      
+      "fg-selected": var(--colorNeutralForeground1),
+    ),
+    $selectedSelectors,
+    false
+  );
+  
+  &::before {
+    content: "";
+    position: absolute;
+    border-radius: var(--borderRadiusCircular);
+    right: var(--spacingHorizontalM);
+    left: var(--spacingHorizontalM);
+    height: var(--strokeWidthThicker);
+    bottom: 0;
+  }
+
+  @media (hover: hover) {
+    &:hover::before {
+      background: var(--colorNeutralStroke1Hover);
+    }
+  }
+
+  &:active::before {
+    background: var(--colorNeutralStroke1Pressed);
+  }
+
+  @each $selector in $selectedSelectors {
+    &#{$selector} {
+      font-weight: var(--fontWeightSemibold);
+      &::before {
+        background: var(--colorCompoundBrandStroke);
+      }
+    }
+  }
+}
+
 @mixin bar-item-list-item($clickable: true) {
   @include btn-base;
   @if ($clickable) {

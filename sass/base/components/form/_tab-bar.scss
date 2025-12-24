@@ -1,0 +1,10 @@
+@use '../../mixins';
+
+.tab_bar {
+	height: 44px;
+	flex-shrink: 0;
+	> * {
+		@include mixins.tab-list-item(('.open'));
+		flex-grow: 0;
+	}
+}
