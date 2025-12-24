@@ -1,21 +1,147 @@
 @use '../../mixins';
 
-$pluginListGrid: var(--spacingHorizontalM);
+$pluginPageGrid: var(--spacingHorizontalS);
+$pluginPageSpace: var(--spacingHorizontalL);
+
+dialog#plugins#plugins {
+	background-color: var(--colorNeutralBackground2);
+}
+
+#plugin_browser_sidebar {
+	padding-top: $pluginPageSpace;
+	border-right: none;
+}
+
+#plugin_browser_start_page {
+	overflow-y: auto;
+	padding: $pluginPageSpace;
+}
+
+.plugin_tag_list li {
+	@include mixins.tag-base();
+}
+
+dialog#plugins .version {
+	@include mixins.tag-filled();
+}
+
+.plugin_installed_tag, .plugin_disabled_tag {
+	@include mixins.tag-brand();
+}
+
+li.plugin_feature_entry {
+	@include mixins.bar-item-list-item(false);
+	&.clickable {
+		@include mixins.bar-item-list-item(true);
+	}
+}
+
+#plugins_list_main_bar {
+	gap: var(--spacingHorizontalSNudge)
+}
+
+#plugins .tab_bar {
+	margin-block: $pluginPageSpace var(--spacingVerticalS);
+}
+
+#plugin_browser_page_tab_bar {
+	gap: 0;
+	height: 44px;
+	padding: 0 $pluginPageSpace;
+	> li {
+		@include mixins.tab-list-item(('.selected'));
+		margin-inline: 0;
+	}
+}
 
 #plugin_list {
 	display: flex;
 	flex-direction: column;
 
-	justify-content: flex-start;
-	align-items: center;
+	padding: $pluginPageGrid;
+	gap: $pluginPageGrid;
 
-	padding: $pluginListGrid;
-	gap: $pluginListGrid;
+	background: transparent;
 
 	> li {
 		@include mixins.card-filled(('.selected'), true);
 		--fui-Card--size: var(--spacingHorizontalM);
 		flex-shrink: 0;
 		margin: 0;
+	}
+}
+
+.plugins_suggested_row {
+	margin-top: $pluginPageSpace;
+	> ul {
+		display: flex;
+		gap: $pluginPageGrid;
+		overflow-x: auto;
+		padding: 0 $pluginPageSpace;
+		width: calc(100% + $pluginPageSpace);
+		margin-inline: calc($pluginPageSpace * -1);
+		mask-image:
+			linear-gradient(
+				to right,
+				transparent 0%,
+				black $pluginPageSpace,
+				black calc(100% - $pluginPageSpace),
+				transparent 100%
+			);
+		> li {
+			@include mixins.card-filled((), true);
+			width: 200px;
+			margin: 0;
+		}
+	}
+}
+
+.plugin_browser_tabbed_page {
+	padding: 0 var(--spacingHorizontalXXL);
+	overflow-y: auto;
+}
+
+#plugin_browser_page {
+	.button_bar button {
+		@include mixins.btn-shape('large');
+		i {
+			display: block;
+			text-align: center;
+			width: auto;
+			max-width: unset;
+			font-size: 24px;
+			text-decoration: none;
+		}
+	}
+}
+
+#plugin_browser_changelog {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacingVerticalS);
+	padding: var(--spacingVerticalS) var(--spacingHorizontalXXL);
+	> li {
+		@include mixins.card-filled;
+		--fui-Card--size: var(--spacingHorizontalS);
+		flex-shrink: 0;
+		h3 {
+			font-family: var(--font-headline);
+			margin-block: 0;
+		}
+	}
+}
+
+.features_list > li > ul {
+	background-color: var(--colorNeutralBackground2);
+}
+
+#plugin_browser_sidebar > .pagination_numbers {
+	padding: $pluginPageGrid;
+	gap: $pluginPageGrid;
+	li {
+		@include mixins.btn-base;
+		@include mixins.btn-shape;
+		@include mixins.btn-secondary(('.selected'));
+		min-width: 32px;
 	}
 }
