@@ -82,7 +82,7 @@ const compileToTheme = async (
   );
   const result = transform({
     filename: "",
-    minify: true,
+    minify: false,
     code: Buffer.from(compiled.css),
     targets
   });
