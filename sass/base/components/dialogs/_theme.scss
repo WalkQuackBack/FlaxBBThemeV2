@@ -10,7 +10,7 @@ $themeListGrid: var(--spacingHorizontalS);
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: $themeListGrid;
 	.theme {
-		@include mixins.card(('.selected'));
+		@include mixins.card-filled(('.selected'), true);
 		border-width: var(--strokeWidthThin);
 		--fui-Card--size: #{$themeListGrid};
 		> .theme_preview {

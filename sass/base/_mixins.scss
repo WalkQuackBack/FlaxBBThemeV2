@@ -346,34 +346,40 @@ body:not([theme-state-transition="false"]) {
 }
 
 
-@mixin card($selectedSelectors: ()) {
+@mixin card-filled($selectedSelectors: (), $interactable: false) {
   @include card-base();
   --fui-Card--border-radius: var(--borderRadiusMedium);
   --fui-Card--size: 12px;
-  @include stateful(
-    (
-      "bg": var(--colorNeutralBackground1),
-      "fg": var(--colorNeutralForeground1),
-      "shadow": var(--shadow4),
-	  
-      "bg-hover": var(--colorNeutralBackground1Hover),
-      "fg-hover": var(--colorNeutralForeground1Hover),
-      "shadow-hover": var(--shadow8),
+  @if ($interactable) {
+    @include stateful(
+      (
+        "bg": var(--colorNeutralBackground1),
+        "fg": var(--colorNeutralForeground1),
+        "shadow": var(--shadow4),
+      
+        "bg-hover": var(--colorNeutralBackground1Hover),
+        "fg-hover": var(--colorNeutralForeground1Hover),
+        "shadow-hover": var(--shadow8),
 
-      "bg-pressed": var(--colorNeutralBackground1Pressed),
-      "fg-pressed": var(--colorNeutralForeground1Pressed),
+        "bg-pressed": var(--colorNeutralBackground1Pressed),
+        "fg-pressed": var(--colorNeutralForeground1Pressed),
 
-      "bg-selected": var(--colorNeutralBackground1Selected),
-      "fg-selected": var(--colorNeutralForeground1Selected),
-      "stroke-selected": var(--colorNeutralStroke1Selected),
+        "bg-selected": var(--colorNeutralBackground1Selected),
+        "fg-selected": var(--colorNeutralForeground1Selected),
+        "stroke-selected": var(--colorNeutralStroke1Selected),
 
-      "bg-selected-hover": var(--colorNeutralBackground1Hover),
-      "fg-selected-hover": var(--colorNeutralForeground1Hover),
+        "bg-selected-hover": var(--colorNeutralBackground1Hover),
+        "fg-selected-hover": var(--colorNeutralForeground1Hover),
 
-      "bg-selected-pressed": var(--colorNeutralBackground1Pressed),
-      "fg-selected-pressed": var(--colorNeutralForeground1Pressed),
-    ), $selectedSelectors
-  );
+        "bg-selected-pressed": var(--colorNeutralBackground1Pressed),
+        "fg-selected-pressed": var(--colorNeutralForeground1Pressed),
+      ), $selectedSelectors
+    );
+  } @else {
+    background: var(--colorNeutralBackground1);
+    color: var(--colorNeutralForeground1);
+    box-shadow: var(--shadow4);
+  }
 }
 
 @mixin tag-base() {

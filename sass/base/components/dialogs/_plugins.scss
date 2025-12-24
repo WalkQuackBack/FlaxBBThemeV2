@@ -13,7 +13,7 @@ $pluginListGrid: var(--spacingHorizontalM);
 	gap: $pluginListGrid;
 
 	> li {
-		@include mixins.card(('.selected'));
+		@include mixins.card-filled(('.selected'), true);
 		--fui-Card--size: var(--spacingHorizontalM);
 		flex-shrink: 0;
 		margin: 0;
