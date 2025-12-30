@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFile } from "node:fs";
 import * as path from "@std/path";
+import { parseArgs } from "@std/cli";
 
 import { Buffer } from "node:buffer";
 import process from "node:process";
@@ -7,6 +8,10 @@ import process from "node:process";
 import browserslist from 'browserslist';
 import { transform, browserslistToTargets } from "lightningcss";
 import * as sass from "sass";
+
+const flags = parseArgs(Deno.args, {
+  boolean: ["dev"],
+});
 
 const targets = browserslistToTargets(browserslist(['last 2 versions', 'not dead']));
 
@@ -189,25 +194,27 @@ const buildAll = async () => {
 
 buildAll();
 
-console.log(`Watching for changes in ${PLACES_TO_WATCH}...`);
-const watcher = Deno.watchFs(PLACES_TO_WATCH);
-for await (const event of watcher) {
-  event.paths.forEach((filePath) => {
-    if (!filePath) return;
-    const basename = path.basename(filePath);
-    if (basename === 'template.bbtheme') {
-      TEMPLATE = readFileSync("./template.bbtheme", "utf8");
-    }
-    if (
-      basename.endsWith(".scss") || basename.endsWith(".sass") ||
-      PLACES_TO_WATCH.includes(basename)
-    ) {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => {
-        console.log(`\nChange detected in: ${path.basename(filePath)}`);
-        buildAll();
-      }, 300);
-    }
-  });
-  //   console.log(">>>> event", event);
+if (flags.dev) {
+  console.log(`Watching for changes in ${PLACES_TO_WATCH}...`);
+  const watcher = Deno.watchFs(PLACES_TO_WATCH);
+  for await (const event of watcher) {
+    event.paths.forEach((filePath) => {
+      if (!filePath) return;
+      const basename = path.basename(filePath);
+      if (basename === 'template.bbtheme') {
+        TEMPLATE = readFileSync("./template.bbtheme", "utf8");
+      }
+      if (
+        basename.endsWith(".scss") || basename.endsWith(".sass") ||
+        PLACES_TO_WATCH.includes(basename)
+      ) {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          console.log(`\nChange detected in: ${path.basename(filePath)}`);
+          buildAll();
+        }, 300);
+      }
+    });
+    //   console.log(">>>> event", event);
+  }
 }
