@@ -1,2 +1,5 @@
 @use "../../base/main";
+@use "../../base/effects";
 @use "../../theme/windows/dark";
+
+@include effects.blurs('dark');
