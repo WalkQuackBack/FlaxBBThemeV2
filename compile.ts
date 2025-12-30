@@ -1,9 +1,8 @@
-import { existsSync, mkdirSync, readFileSync, writeFile } from "node:fs";
+import { existsSync } from "@std/fs/exists";
 import * as path from "@std/path";
 import { parseArgs } from "@std/cli";
 
 import { Buffer } from "node:buffer";
-import process from "node:process";
 
 import browserslist from 'browserslist';
 import { transform, browserslistToTargets } from "lightningcss";
@@ -23,11 +22,9 @@ const THEME_PREFIX = "bbflaxv2-";
 const PROJECT_NAME_PRETTY = "Flax ";
 const VERSION = "0.1.0";
 
-const AUTHOR = process.env.USER ||
-  process.env.USERNAME ||
-  "";
+const AUTHOR = "wqb";
 
-let TEMPLATE = readFileSync("./template.bbtheme", "utf8");
+let TEMPLATE = Deno.readTextFileSync("./template.bbtheme");
 
 const folders = {
   baseline: [
@@ -47,7 +44,7 @@ const folders = {
 };
 
 if (!existsSync(OUT)) {
-  mkdirSync(OUT, {
+  Deno.mkdirSync(OUT, {
     recursive: true,
   });
 }
@@ -73,7 +70,7 @@ const compileToTheme = async (
     filename: "",
     minify: false,
     code: Buffer.from(
-      readFileSync("./prefix.css"),
+      Deno.readTextFileSync("./prefix.css"),
     ),
     targets
   }).code.toString();
@@ -115,17 +112,17 @@ const compileToTheme = async (
     result.code.toString(),
   );
 
-  writeFile(
+  Deno.writeTextFile(
     path.join(
       OUT,
       `${THEME_PREFIX + variant}.bbtheme`,
     ),
     themeData,
-    (err) => {
-      if (err) throw err;
-      console.log(`Built ${variant} (${formatBytes(themeData.length)})`);
-    },
-  );
+  ).catch((err) => {
+    throw err;
+  }).finally(() => {
+    console.log(`Built ${variant} (${formatBytes(themeData.length)})`);
+  });
 };
 
 const createFoldersAndCompile = async (
@@ -202,7 +199,7 @@ if (flags.dev) {
       if (!filePath) return;
       const basename = path.basename(filePath);
       if (basename === 'template.bbtheme') {
-        TEMPLATE = readFileSync("./template.bbtheme", "utf8");
+        TEMPLATE = Deno.readTextFileSync("./template.bbtheme");
       }
       if (
         basename.endsWith(".scss") || basename.endsWith(".sass") ||
