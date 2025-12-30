@@ -148,15 +148,9 @@ const createFoldersAndCompile = async (
           newBasePath,
           `${file}.scss`,
         );
-        // Fixed path slicing logic to match original intent
-        const variant = newBasePath
-          .replaceAll("\\", "-")
-          .replace("sass-variants-", "") +
-          "-" +
-          file;
         await compileToTheme(
           inputFile,
-          variant,
+          `${folderName}-${file}`,
         );
       }));
     } else {
